@@ -25,7 +25,7 @@ api = 2
 ; install profiles *should not* include a core project.
   
 ; Drupal 6.x core:
-projects[drupal][version] = 6
+; projects[drupal][version] = 6
 
 ; Modules
 ; --------
