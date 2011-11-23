@@ -33,18 +33,51 @@ function voxbox_profile_modules() {
 }
 
 /**
+ * Implementation of hook_profile_task_list
+ */
+function default_profile_task_list() {
+  $tasks = array();
+  $tasks['install-voxbox'] = st('Install Voxbox');
+  return $tasks;
+}
+
+
+/**
 * Implementation of hook_profile_tasks().
 */
 function voxbox_profile_tasks(&$task, $url) {
-  // just doing profile for now...
-  install_enable_theme("tao");
+  install_include(voxbox_profile_modules());
 
-  // Enable default theme - this will be subtheme
-  install_default_theme("omega");
+  switch ($task) {
+    case 'install-voxbox':
+      return voxbox_profile_install_voxbox($url);
+  }
+}
+
+/**
+ * Return default array of features to install.
+ */
+function voxbox_profile_default_features() {
+  return array(
+    'voxbox_og', 'voxbox_announcements',
+  );
+}
+
+/**
+ * Install profile task: install-voxbox
+ */
+function voxbox_profile_install_voxbox($url) {
+  // install features - could override list with form options 
+  features_install_modules(voxbox_profile_default_features());
+
+  // themes
+  install_enable_theme('tao');
+  install_admin_theme('rubik');
+  install_default_theme('omega');
 
   // Put the navigation block in the sidebar because the sidebar looks awesome.
   install_init_blocks();
-
+  
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
 }
