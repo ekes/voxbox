@@ -33,9 +33,9 @@ function voxbox_profile_modules() {
 }
 
 /**
- * Implementation of hook_profile_task_list
+ * Implementation of hook_profile_task_list().
  */
-function default_profile_task_list() {
+function voxbox_profile_task_list() {
   $tasks = array();
   $tasks['install-voxbox'] = st('Install Voxbox');
   return $tasks;
@@ -46,7 +46,12 @@ function default_profile_task_list() {
 * Implementation of hook_profile_tasks().
 */
 function voxbox_profile_tasks(&$task, $url) {
-  install_include(voxbox_profile_modules());
+  // Install the core required modules and our extra modules
+  $core_required = array('block', 'filter', 'node', 'system', 'user');
+  install_include(array_merge(voxbox_profile_modules(), $core_required));
+
+  // Overkill in preparation for a more interactive install option.
+  if ($task == 'profile') { $task = 'install-voxbox'; }
 
   switch ($task) {
     case 'install-voxbox':
