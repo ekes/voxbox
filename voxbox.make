@@ -68,7 +68,10 @@ projects[wysiwyg][subdir] = "contrib"
 projects[better_formats][version] = 1.2
 projects[better_formats][type] = "module"
 projects[better_formats][subdir] = "contrib"
-projects[views][version] = 3.0-rc3
+projects[vertical_tabs][version] = 1.0-rc2
+projects[vertical_tabs][type] = "module"
+projects[vertical_tabs][subdir] = "contrib"
+projects[views][version] = 2.16
 projects[views][type] = "module"
 projects[views][subdir] = "contrib"
 projects[og][version] = 2.1
@@ -87,6 +90,11 @@ projects[voipextension][type] = "module"
 projects[voipextension][download][type] = "git"
 projects[voipextension][download][url] = "git://github.com/ekes/voipextension.git"
 projects[voipextension][subdir] = "contrib"
+projects[voipviews][type] = "module"
+projects[voipviews][download][type] = "git"
+projects[voipviews][download][url] = "git://github.com/ekes/voipviews.git"
+projects[voipviews][download][branch] = "6.x-2.x"
+projects[voipviews][subdir] = "contrib"
 
 ; Themes
 ; --------
