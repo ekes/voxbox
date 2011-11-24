@@ -1,3 +1,24 @@
 <?php
 
 include_once('voxbox_announcements.features.inc');
+
+/**
+ * Implementation of hook_voipscript_load_script().
+ */
+function voxbox_announcements_voipscript_load_script($script_name, $params = NULL) {
+  if ($script_name == 'voxbox_announcements_node_script') {
+    module_load_include('inc', 'voxbox_announcements', 'voxbox_announcements.script');
+    $node = node_load($params['nid']);
+    return _voxbox_announcements_node_script($node);
+  }
+}
+
+/**
+ * Implementation of hook_voipscript_get_script_names().
+ */
+function voxbox_announcements_voipscript_get_script_names() {
+  return array(
+    'voxbox_announcements_node_script',
+  );
+} 
+
