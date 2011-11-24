@@ -25,7 +25,7 @@ function voxbox_profile_modules() {
     'menu', 'dblog', 'help', 'taxonomy',
     /* other contrib */
     'install_profile_api',
-    'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup',
+    'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
     'views', 'views_ui', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 
     'admin_menu', 'wysiwyg', 'better_formats',
     'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore',
