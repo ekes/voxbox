@@ -1,3 +1,19 @@
 <?php
 
 include_once('voxbox_voip.features.inc');
+
+function voxbox_voip_voipscript_load_script($script_name, $params = NULL) {
+  if ($script_name == 'voxbox_welcome') {
+    module_load_include('inc', 'voxbox_voip', 'voxbox_voip.script');
+    return _voxbox_voip_welcome();
+  }
+}
+
+/**
+ * Implementation of hook_voipscript_get_script_names().
+ */
+function voxbox_voip_voipscript_get_script_names() {
+  return array(
+    'voxbox_welcome',
+  );
+}

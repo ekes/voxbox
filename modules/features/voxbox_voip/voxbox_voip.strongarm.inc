@@ -41,5 +41,26 @@ function voxbox_voip_strongarm() {
   $strongarm->value = 0;
   $export['voipcall_use_sms_framework'] = $strongarm;
 
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'voipextension_prompt_msg';
+  $strongarm->value = 'Please enter the desired Voxbox number, followed by #.';
+  $export['voipextension_prompt_msg'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'voipextension_transferring_msg';
+  $strongarm->value = 'Transferring to Voxbox @number.';
+  $export['voipextension_transferring_msg'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'voipextension_unknown_msg';
+  $strongarm->value = 'Sorry unknown Voxbox @number.';
+  $export['voipextension_unknown_msg'] = $strongarm;
+
   return $export;
 }
