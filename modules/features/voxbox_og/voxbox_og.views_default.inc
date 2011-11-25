@@ -114,10 +114,12 @@ function voxbox_og_views_default_views() {
   $handler->override_option('cache', array(
     'type' => 'none',
   ));
+  $handler->override_option('empty', 'There are presently no announcements for this Voxbox.');
+  $handler->override_option('empty_format', '1');
   $handler->override_option('items_per_page', 20);
   $handler->override_option('use_pager', '1');
   $handler->override_option('distinct', 0);
-  $handler->override_option('style_plugin', 'voipviews_list');
+  $handler->override_option('style_options', NULL);
   $handler->override_option('row_plugin', 'node');
   $handler->override_option('row_options', array(
     'teaser' => 1,
@@ -319,7 +321,10 @@ function voxbox_og_views_default_views() {
       'relationship' => 'none',
     ),
   ));
+  $handler->override_option('empty_format', 0);
   $handler->override_option('items_per_page', 0);
+  $handler->override_option('style_plugin', 'voipviews_list');
+  $handler->override_option('style_options', array());
   $handler->override_option('row_plugin', 'voipviews_row_ivr');
   $handler->override_option('row_options', array(
     'ivr_prompt_intro' => '',
