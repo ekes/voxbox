@@ -47,7 +47,7 @@ function voxbox_og_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'voipnode_default_script_name_voxbox';
-  $strongarm->value = 'voipnode_basic';
+  $strongarm->value = 'voxbox_og_node_script';
   $export['voipnode_default_script_name_voxbox'] = $strongarm;
 
   $strongarm = new stdClass;
