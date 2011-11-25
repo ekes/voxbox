@@ -1,3 +1,23 @@
 <?php
 
 include_once('voxbox_og.features.inc');
+
+/**
+ * Implementation of hook_voipscript_load_script().
+ */
+function voxbox_og_voipscript_load_script($script_name, $params = NULL) {
+  if ($script_name == 'voxbox_og_node_script') {
+    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+    $node = node_load($params['nid']);
+    return _voxbox_og_node_script($node);
+  }
+}
+
+/**
+ * Implementation of hook_voipscript_get_script_names().
+ */
+function voxbox_og_voipscript_get_script_names() {
+  return array(
+    'voxbox_og_node_script',
+  );
+} 
