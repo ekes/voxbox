@@ -27,7 +27,7 @@ function voxbox_profile_modules() {
     'install_profile_api', 'autoload',
     'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
     'views', 'views_ui', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 
-    'admin_menu', 'wysiwyg', 'better_formats',
+    'admin_menu', 'wysiwyg', 'better_formats', 'vertical_tabs',
     'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node',
   );
 }
@@ -64,7 +64,7 @@ function voxbox_profile_tasks(&$task, $url) {
  */
 function voxbox_profile_default_features() {
   return array(
-    'voxbox_og', 'voxbox_announcements',
+    'voxbox_og', 'voxbox_announcements', 'voxbox_voip',
   );
 }
 
