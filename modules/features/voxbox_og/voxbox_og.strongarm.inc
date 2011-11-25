@@ -39,6 +39,20 @@ function voxbox_og_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'voicemail_node_default_status_voxbox';
+  $strongarm->value = '1';
+  $export['voicemail_node_default_status_voxbox'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'voicemail_node_use_voxbox';
+  $strongarm->value = 1;
+  $export['voicemail_node_use_voxbox'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'voipnode_default_extension_status_voxbox';
   $strongarm->value = '1';
   $export['voipnode_default_extension_status_voxbox'] = $strongarm;

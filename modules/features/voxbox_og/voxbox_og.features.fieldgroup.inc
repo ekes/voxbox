@@ -43,6 +43,7 @@ function voxbox_og_fieldgroup_default_groups() {
       '0' => 'field_voipnode_aname',
       '1' => 'field_voipnode_adesc',
       '2' => 'field_voipnode_agreet',
+      '3' => 'field_voicemail_greeting',
     ),
   );
 

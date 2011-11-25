@@ -24,11 +24,11 @@ function voxbox_profile_modules() {
     /* optional core */
     'menu', 'dblog', 'help', 'taxonomy',
     /* other contrib */
-    'install_profile_api',
+    'install_profile_api', 'autoload',
     'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
     'views', 'views_ui', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 
     'admin_menu', 'wysiwyg', 'better_formats',
-    'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore',
+    'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node',
   );
 }
 
