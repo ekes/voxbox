@@ -25,6 +25,13 @@ function voxbox_og_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'og_home_page_view';
+  $strongarm->value = 'og_ghp_ron_voip';
+  $export['og_home_page_view'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'og_max_groups_voxbox';
   $strongarm->value = '';
   $export['og_max_groups_voxbox'] = $strongarm;
