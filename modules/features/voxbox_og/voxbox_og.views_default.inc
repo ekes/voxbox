@@ -306,11 +306,23 @@ function voxbox_og_views_default_views() {
       ),
       'relationship' => 'none',
     ),
+    'gosub_1' => array(
+      'gosub_script' => 'voicemail_node_basic',
+      'gosub_params' => '{ "nid" : [node:nid] }',
+      'exclude' => '',
+      'id' => 'gosub_1',
+      'table' => 'voipviews',
+      'field' => 'gosub',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
   ));
   $handler->override_option('items_per_page', 0);
   $handler->override_option('row_plugin', 'voipviews_row_ivr');
   $handler->override_option('row_options', array(
-    'ivr_prompt_intro' => 'Press any key from the telephone keypad.',
+    'ivr_prompt_intro' => '',
     'ivr_invalid_msg' => 'Invalid option selected.',
     'ivr_no_input_msg' => 'Invalid option selected.',
     'ivr_max_attempts' => '3',
@@ -320,6 +332,7 @@ function voxbox_og_views_default_views() {
       'ivr_next_row' => '2',
       'gosub' => '1',
       'ivr_return' => '#',
+      'gosub_1' => '*',
     ),
     'ivr_prompt' => array(
       '\\0' => '',
