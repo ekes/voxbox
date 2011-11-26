@@ -4,7 +4,7 @@
  * @file
  *   voipscripts for voxbox announcements content type.
  */
-function _voxbox_announcments_node_script($node) {
+function _voxbox_announcements_node_script($node) {
   $script = new VoipScript('voxbox_announcement');
   $script->addLabel('begin');
   $script->addSay($node->title);
