@@ -310,7 +310,7 @@ function voxbox_og_views_default_views() {
     ),
     'gosub_1' => array(
       'gosub_script' => 'voicemail_node_basic',
-      'gosub_params' => '{"nid" : "[nid]"}',
+      'gosub_params' => '{"nid" : "!1"}',
       'exclude' => '',
       'id' => 'gosub_1',
       'table' => 'voipviews',
