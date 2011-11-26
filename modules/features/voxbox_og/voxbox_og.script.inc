@@ -11,7 +11,7 @@ function _voxbox_og_node_script($node) {
   $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
   $params = array('view_name' => 'og_ghp_ron_voip', 'display_id' => 'voipviews_1', 'args' => json_encode(array($node->nid)));
   $script->addGosub('voipviews_read_view', $params);
-  $script->addGoto('intro');
+  $script->addReturn();
 
   $script->addLabel('start_voicemail');
   $script->addGosub('voicemail_node_basic', array('nid' => $node->nid));
