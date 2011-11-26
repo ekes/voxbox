@@ -115,7 +115,7 @@ function voxbox_og_views_default_views() {
     'type' => 'none',
   ));
   $handler->override_option('empty', 'There are presently no announcements for this Voxbox.');
-  $handler->override_option('empty_format', '1');
+  $handler->override_option('empty_format', 1);
   $handler->override_option('items_per_page', 20);
   $handler->override_option('use_pager', '1');
   $handler->override_option('distinct', 0);
@@ -264,7 +264,7 @@ function voxbox_og_views_default_views() {
     ),
     'gosub' => array(
       'gosub_script' => 'voxbox_announcements_node_script',
-      'gosub_params' => '{ "nid" : "[nid]" }',
+      'gosub_params' => '{ "nid" : "[nid]"}',
       'exclude' => '',
       'id' => 'gosub',
       'table' => 'voipviews',
@@ -310,7 +310,7 @@ function voxbox_og_views_default_views() {
     ),
     'gosub_1' => array(
       'gosub_script' => 'voicemail_node_basic',
-      'gosub_params' => '{ "nid" : [node:nid] }',
+      'gosub_params' => '{"nid" : "[nid]"}',
       'exclude' => '',
       'id' => 'gosub_1',
       'table' => 'voipviews',
