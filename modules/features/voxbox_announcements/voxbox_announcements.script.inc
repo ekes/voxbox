@@ -19,6 +19,9 @@ function _voxbox_announcements_node_script($node) {
   $script->addLabel('no_input_received');
   $script->addSay('Selection not recognized.');
   $script->addGoto('options');
+
+  $script->addLabel('return');
+  $script->addReturn();
  
   return $script;
 }
