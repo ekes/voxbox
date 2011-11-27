@@ -79,12 +79,15 @@ function voxbox_profile_install_voxbox($url) {
   install_enable_theme('tao');
   install_admin_theme('rubik');
   install_enable_theme('omega');
+  install_enable_theme('omegavb');
   install_default_theme('omegavb');
 
   // Put the navigation block in the sidebar because the sidebar looks awesome.
   install_init_blocks();
   // add og group admin block
-  install_set_block('og', 0, 'omega', 'sidebar_first', -10);
+  install_set_block('og', 0, 'omegavb', 'sidebar_first', -10);
+  // default number block
+  install_set_block('voxbox_voip', 'phone_number', 'omegavb', 'header_last', 0);
 
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
