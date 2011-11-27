@@ -61,7 +61,11 @@ projects[views][subdir] = "contrib"
 projects[og][version] = 2.1
 projects[og][type] = "module"
 projects[og][subdir] = "contrib"
-; ui improvers
+; support contrib
+projects[draggableviews][version] = 3.5
+projects[draggableviews][type] = "module"
+projects[draggableviews][subdir] = "contrib"
+; ui improvements
 projects[better_formats][version] = 1.2
 projects[better_formats][type] = "module"
 projects[better_formats][subdir] = "contrib"
