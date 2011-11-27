@@ -65,7 +65,9 @@ function omegavb_preprocess_page(&$vars, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 function omegavb_preprocess_node(&$vars, $hook) {
-  $vars['voipextension_number'] = t('Extension number:') . ' ' . $vars['voipextension_number'];
+  if (! empty($vars['voipextension_number'])) {
+    $vars['voipextension_number'] = t('Extension number:') . ' ' . $vars['voipextension_number'];
+  }
 }
 
 /**
