@@ -2,6 +2,40 @@
 
 include_once('voxbox_voip.features.inc');
 
+/**
+ * Implementation of hook_block().
+ */
+function voxbox_voip_block($op = 'list', $delta = 0, $edit = array()) {
+  switch ($op) {
+    case 'list':
+      $blocks['phone_number'] = array(
+        'info' => t('Default Voxbox phone number block'),
+        'cache' => BLOCK_NO_CACHE,
+      );
+      return $blocks;
+    case 'view': 
+      if ($delta == 'phone_number') {
+        return voxbox_voip_phone_number_block();
+      }
+    default:
+      return;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function voxbox_voip_theme($existing, $type, $theme, $path) {
+  return array(
+    'voxbox_voip_phone_number_block' => array(
+      'arguments' => array('site_name' => NULL, 'phone_number' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_voipscript_load_script().
+ */
 function voxbox_voip_voipscript_load_script($script_name, $params = NULL) {
   if ($script_name == 'voxbox_welcome') {
     module_load_include('inc', 'voxbox_voip', 'voxbox_voip.script');
@@ -16,4 +50,51 @@ function voxbox_voip_voipscript_get_script_names() {
   return array(
     'voxbox_welcome',
   );
+}
+
+/**
+ * Default block to show the phone number of the site.
+ *
+ * If no number is set, and the user is an admin it will provide a link
+ * to configure the VoIP settings.
+ */
+function voxbox_voip_phone_number_block() {
+  $number = variable_get('voipcall_cid_number', NULL);
+  if (! empty($number)) {
+    $block = array(
+      'subject' => '',
+      'content' => theme('voxbox_voip_phone_number_block', variable_get('site_name', 'Voxbox'), $number),
+    );
+  }
+  else {
+    if (user_access('administer voip drupal framework')) {
+      $block = array(
+        'subject' => '',
+        'content' => t('Configure your <a href="@voip-admin">VoIP settings</a>.', array('@voip-admin' => url('admin/voip/call/settings'))),
+      );
+    }
+    else {
+      $block = array(
+        'subject' => '',
+        'content' => '',
+      );
+    }
+  }
+
+  return $block;
+}
+
+/**
+ * Default implemenation of theme voxbox_voip_phone_number_block.
+ *
+ * @ingroup themeable.
+ */
+function theme_voxbox_voip_phone_number_block($site_name, $phone_number) {
+  $output = '<div class="site-voxbox-number">';
+  $output .= filter_xss_admin($site_name);
+  $output .= ' ' . t('phone:') . ' ';
+  $output .= check_plain($phone_number);
+  $output .= '</div>';
+
+  return $output;
 }
