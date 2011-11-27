@@ -24,27 +24,19 @@ function voxbox_og_views_default_views() {
     ),
   ));
   $handler->override_option('sorts', array(
-    'sticky' => array(
-      'id' => 'sticky',
-      'table' => 'node',
-      'field' => 'sticky',
-      'order' => 'DESC',
-      'relationship' => 'none',
-    ),
-    'created' => array(
-      'id' => 'created',
-      'table' => 'node',
-      'field' => 'created',
-      'order' => 'DESC',
-      'granularity' => 'second',
+    'value0' => array(
+      'order' => 'ASC',
+      'id' => 'value0',
+      'table' => 'draggableviews_structure_node0',
+      'field' => 'value0',
+      'override' => array(
+        'button' => 'Override',
+      ),
       'relationship' => 'none',
     ),
   ));
   $handler->override_option('arguments', array(
     'group_nid' => array(
-      'id' => 'group_nid',
-      'table' => 'og_ancestry',
-      'field' => 'group_nid',
       'default_action' => 'not found',
       'style_plugin' => 'default_summary',
       'style_options' => array(
@@ -55,23 +47,23 @@ function voxbox_og_views_default_views() {
       'wildcard' => 'all',
       'wildcard_substitution' => 'All',
       'title' => '%1',
+      'breadcrumb' => '',
       'default_argument_type' => 'fixed',
       'default_argument' => '',
       'validate_type' => 'og_group_types',
       'validate_fail' => 'not found',
       'break_phrase' => 0,
+      'not' => 0,
+      'id' => 'group_nid',
+      'table' => 'og_ancestry',
+      'field' => 'group_nid',
       'add_table' => 0,
       'relationship' => 'none',
       'default_argument_fixed' => '',
       'default_argument_php' => '',
       'validate_argument_node_type' => array(
-        'blog' => 0,
-        'poll' => 0,
-        'book' => 0,
-        'group1' => 0,
-        'group2' => 0,
-        'page' => 0,
-        'story' => 0,
+        'announcement' => 0,
+        'voxbox' => 0,
       ),
       'validate_argument_php' => '',
       'require_value' => 0,
@@ -79,14 +71,23 @@ function voxbox_og_views_default_views() {
       'default_argument_user' => 0,
       'validate_argument_node_access' => 0,
       'validate_argument_nid_type' => 'nid',
-      'validate_argument_vocabulary' => array(
-        1 => 0,
-        2 => 0,
-        3 => 0,
-        4 => 0,
-      ),
+      'validate_argument_vocabulary' => array(),
       'validate_argument_type' => 'tid',
-      'not' => 0,
+      'validate_user_argument_type' => 'uid',
+      'validate_user_roles' => array(
+        2 => 0,
+      ),
+      'default_options_div_prefix' => '',
+      'default_taxonomy_tid_term_page' => 0,
+      'default_taxonomy_tid_node' => 0,
+      'default_taxonomy_tid_limit' => 0,
+      'default_taxonomy_tid_vids' => array(),
+      'validate_argument_transform' => 0,
+      'validate_user_restrict_roles' => 0,
+      'validate_argument_is_member' => 'OG_VIEWS_DO_NOT_VALIDATE_MEMBERSHIP',
+      'validate_argument_group_node_type' => array(
+        'voxbox' => 0,
+      ),
     ),
   ));
   $handler->override_option('filters', array(
@@ -115,7 +116,6 @@ function voxbox_og_views_default_views() {
     'type' => 'none',
   ));
   $handler->override_option('empty', 'There are presently no announcements for this Voxbox.');
-  $handler->override_option('empty_format', 1);
   $handler->override_option('items_per_page', 20);
   $handler->override_option('use_pager', '1');
   $handler->override_option('distinct', 0);
@@ -321,7 +321,6 @@ function voxbox_og_views_default_views() {
       'relationship' => 'none',
     ),
   ));
-  $handler->override_option('empty_format', 0);
   $handler->override_option('items_per_page', 0);
   $handler->override_option('style_plugin', 'voipviews_list');
   $handler->override_option('style_options', array());
@@ -386,6 +385,180 @@ function voxbox_og_views_default_views() {
   $handler->override_option('voipextension_directory_type', 1);
   $handler->override_option('voipextension_title', '');
   $handler->override_option('voipextension_description', '');
+  $handler = $view->new_display('page', 'Order page', 'page_1');
+  $handler->override_option('fields', array(
+    'title' => array(
+      'id' => 'title',
+      'table' => 'node',
+      'field' => 'title',
+    ),
+    'value0' => array(
+      'label' => 'Order',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'exclude' => 0,
+      'id' => 'value0',
+      'table' => 'draggableviews_structure_node0',
+      'field' => 'value0',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+  ));
+  $handler->override_option('arguments', array(
+    'group_nid' => array(
+      'default_action' => 'not found',
+      'style_plugin' => 'default_summary',
+      'style_options' => array(
+        'count' => TRUE,
+        'override' => FALSE,
+        'items_per_page' => 25,
+      ),
+      'wildcard' => 'all',
+      'wildcard_substitution' => 'All',
+      'title' => '%1',
+      'breadcrumb' => '',
+      'default_argument_type' => 'fixed',
+      'default_argument' => '',
+      'validate_type' => 'og_group_types',
+      'validate_fail' => 'not found',
+      'break_phrase' => 0,
+      'not' => 0,
+      'id' => 'group_nid',
+      'table' => 'og_ancestry',
+      'field' => 'group_nid',
+      'add_table' => 0,
+      'relationship' => 'none',
+      'default_argument_fixed' => '',
+      'default_argument_php' => '',
+      'validate_argument_node_type' => array(
+        'announcement' => 0,
+        'voxbox' => 0,
+      ),
+      'validate_argument_php' => '',
+      'require_value' => 0,
+      'reduce_duplicates' => 0,
+      'default_argument_user' => 0,
+      'validate_argument_node_access' => 0,
+      'validate_argument_nid_type' => 'nid',
+      'validate_argument_vocabulary' => array(),
+      'validate_argument_type' => 'tid',
+      'validate_user_argument_type' => 'uid',
+      'validate_user_roles' => array(
+        2 => 0,
+      ),
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'default_options_div_prefix' => '',
+      'default_taxonomy_tid_term_page' => 0,
+      'default_taxonomy_tid_node' => 0,
+      'default_taxonomy_tid_limit' => 0,
+      'default_taxonomy_tid_vids' => array(),
+      'validate_argument_transform' => 0,
+      'validate_user_restrict_roles' => 0,
+      'validate_argument_is_member' => 'OG_VIEWS_VALIDATE_GROUP_ADMIN',
+      'validate_argument_group_node_type' => array(
+        'voxbox' => 0,
+      ),
+    ),
+  ));
+  $handler->override_option('style_plugin', 'draggabletable');
+  $handler->override_option('style_options', array(
+    'override' => 1,
+    'sticky' => 0,
+    'order' => 'asc',
+    'summary' => '',
+    'columns' => array(
+      'title' => 'title',
+      'value0' => 'value0',
+    ),
+    'info' => array(
+      'title' => array(
+        'sortable' => 0,
+        'separator' => '',
+      ),
+      'value0' => array(
+        'sortable' => 0,
+        'separator' => '',
+      ),
+    ),
+    'default' => -1,
+    'tabledrag_order' => array(
+      'field' => 'value0',
+      'handler' => 'native',
+    ),
+    'tabledrag_order_visible' => array(
+      'visible' => 0,
+    ),
+    'tabledrag_hierarchy' => array(
+      'field' => 'none',
+      'handler' => 'native',
+    ),
+    'tabledrag_hierarchy_visible' => array(
+      'visible' => 0,
+    ),
+    'draggableviews_depth_limit' => '0',
+    'draggableviews_repair' => array(
+      'repair' => 'repair',
+    ),
+    'tabledrag_types_add' => 'Add type',
+    'tabledrag_expand' => array(
+      'expand_links' => 0,
+      'collapsed' => 0,
+      'by_uid' => 0,
+    ),
+    'draggableviews_extensions' => array(
+      'extension_top' => '3',
+      'extension_bottom' => '3',
+    ),
+    'tabledrag_lock' => array(
+      'lock' => 0,
+    ),
+    'draggableviews_default_on_top' => '1',
+    'draggableviews_button_text' => 'Save order',
+    'draggableviews_arguments' => array(
+      'use_args' => 'use_args',
+    ),
+  ));
+  $handler->override_option('path', 'node/%/order');
+  $handler->override_option('menu', array(
+    'type' => 'tab',
+    'title' => 'Order',
+    'description' => 'Order of announcemnets',
+    'weight' => '0',
+    'name' => 'navigation',
+  ));
+  $handler->override_option('tab_options', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
 
   $views[$view->name] = $view;
 
