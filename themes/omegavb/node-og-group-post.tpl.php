@@ -1,6 +1,11 @@
 <?php
+// $Id: node-og-group-post.tpl.php,v 1.3 2008/11/09 17:17:54 weitzman Exp $
+
 /**
- * @file node.tpl.php
+ * @file node-og-group-post.tpl.php
+ * 
+ * Og has added a brief section at bottom for printing links to affiliated groups.
+ * This template is used by default for non group nodes.
  *
  * Theme implementation to display a node.
  *
@@ -46,25 +51,34 @@
  * @see template_preprocess_node()
  */
 ?>
-<div<?php print $attributes; ?>>
+<div id="node-<?php print $node->nid; ?>" class="node<?php if ($sticky) { print ' sticky'; } ?><?php if (!$status) { print ' node-unpublished'; } ?> clear-block">
 
-  <?php print $picture ?>
+<?php print $picture ?>
 
-  <?php if (!$page && $title): ?>
+<?php if (!$page): ?>
   <h2><a href="<?php print $node_url ?>" title="<?php print $title ?>"><?php print $title ?></a></h2>
-  <?php endif; ?>
-  <?php if ($submitted):?>
-  <div class="submitted"><?php print $submitted ?></div>
+<?php endif; ?>
+
+  <div class="meta">
+  <?php if ($submitted): ?>
+    <span class="submitted"><?php print $submitted ?></span>
   <?php endif; ?>
   <?php if ($voipextension_number): ?>
-  <div class="voipextension"><?php print $voipextension_number ?></div>
+    <div class="voipextension"><?php print $voipextension_number ?></div>
   <?php endif; ?>
+  <?php if ($terms): ?>
+    <div class="terms terms-inline"><?php print $terms ?></div>
+  <?php endif;?>
+  </div>
 
-  <?php print $content ?>
-  <?php if ($terms):?>
-  <div class="taxonomy"><?php print $terms; ?></div>
-  <?php endif; ?>
-  <?php if ($links):?>
-  <div class="node-links"><?php print $links; ?></div>
-  <?php endif; ?>
+  <div class="content">
+    <?php print $content ?>
+  </div>
+  
+  <?php if ($node->og_groups && $page) {
+          print '<div class="groups">'. t('Groups'). ': ';
+          print '<div class="links">'.  $og_links['view']. '</div></div>';
+   } ?>
+
+  <?php print $links; ?>
 </div>
