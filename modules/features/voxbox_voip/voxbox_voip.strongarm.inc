@@ -16,8 +16,8 @@ function voxbox_voip_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'voxbox_welcome';
-  $strongarm->value = 'voipextension_basic_menu';
+  $strongarm->name = 'voipcall_inbound_call_script_name';
+  $strongarm->value = 'voxbox_welcome';
   $export['voipcall_inbound_call_script_name'] = $strongarm;
 
   $strongarm = new stdClass;
