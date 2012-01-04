@@ -72,6 +72,7 @@ function voxbox_profile_default_features() {
  * Install profile task: install-voxbox
  */
 function voxbox_profile_install_voxbox($url) {
+  variable_set('install_profile', 'voxbox');
   // install features - could override list with form options 
   features_install_modules(voxbox_profile_default_features());
 
