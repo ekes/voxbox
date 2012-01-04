@@ -94,5 +94,5 @@ function voxbox_profile_install_voxbox($url) {
   features_rebuild();
   
   // needed for autoload
-  // cache_clear_all();
+  cache_clear_all();
 }
