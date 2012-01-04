@@ -93,6 +93,6 @@ function voxbox_profile_install_voxbox($url) {
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
   
-  // needed for autoload
-  cache_clear_all();
+  // needed to make autoload reindex
+  module_invoke('autoload', 'flush_caches');
 }
