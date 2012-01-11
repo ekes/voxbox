@@ -124,9 +124,13 @@ projects[rubik][version] = 3.0-beta2
 projects[rubik][type] = "theme"
 projects[tao][version] = 3.2
 projects[tao][type] = "theme"
-  
+
 ; Libraries
 ; ---------
 libraries[ckeditor][type] = "libraries"
 libraries[ckeditor][download][type] = "file"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
+; http://github.com/jwagener/recorder.js
+libraries[audiorecorderfield][download][type] = "get"
+libraries[audiorecorderfield][download][url] = "http://github.com/jwagener/recorder.js/raw/881498c1b8dbb8b10bc480be6fbad8b723fb1895/recorder.swf"
+libraries[audiorecorderfield][subdir] = "modules/contrib/audiorecorderfield/recorders"
