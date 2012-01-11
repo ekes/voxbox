@@ -273,8 +273,9 @@ function voxbox_user_user_default_permissions() {
   $permissions['create voxbox content'] = array(
     'name' => 'create voxbox content',
     'roles' => array(
-      '0' => 'site admin',
-      '1' => 'voxbox admin',
+      '0' => 'authenticated user',
+      '1' => 'site admin',
+      '2' => 'voxbox admin',
     ),
   );
 
@@ -309,7 +310,8 @@ function voxbox_user_user_default_permissions() {
   $permissions['delete own voxbox content'] = array(
     'name' => 'delete own voxbox content',
     'roles' => array(
-      '0' => 'site admin',
+      '0' => 'authenticated user',
+      '1' => 'site admin',
     ),
   );
 
