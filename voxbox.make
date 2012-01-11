@@ -85,6 +85,9 @@ projects[filefield_paths][subdir] = "contrib"
 projects[audiofield][version] = 1.0
 projects[audiofield][type] = "module"
 projects[audiofield][subdir] = "contrib"
+projects[audiorecorderfield][version] = 1.0-beta1
+projects[audiorecorderfield][type] = "module"
+projects[audiorecorderfield][subdir] = "contrib"
 ;
 projects[wysiwyg][version] = 2.4
 projects[wysiwyg][type] = "module"

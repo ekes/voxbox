@@ -42,7 +42,7 @@ function voxbox_og_content_default_fields() {
     'list_default' => 1,
     'description_field' => '0',
     'widget' => array(
-      'file_extensions' => 'mp3',
+      'file_extensions' => 'mp3 wav',
       'file_path' => '',
       'progress_indicator' => 'bar',
       'max_filesize_per_file' => '',
@@ -50,8 +50,8 @@ function voxbox_og_content_default_fields() {
       'label' => 'Voicemail greeting',
       'weight' => '15',
       'description' => '',
-      'type' => 'audiofield_widget',
-      'module' => 'audiofield',
+      'type' => 'audiorecorderfield_widget',
+      'module' => 'audiorecorderfield',
     ),
   );
 
@@ -91,7 +91,7 @@ function voxbox_og_content_default_fields() {
     'list_default' => 1,
     'description_field' => '0',
     'widget' => array(
-      'file_extensions' => 'mp3',
+      'file_extensions' => 'mp3 wav',
       'file_path' => '',
       'progress_indicator' => 'bar',
       'max_filesize_per_file' => '',
@@ -99,8 +99,8 @@ function voxbox_og_content_default_fields() {
       'label' => 'Audio Description',
       'weight' => '9',
       'description' => '',
-      'type' => 'audiofield_widget',
-      'module' => 'audiofield',
+      'type' => 'audiorecorderfield_widget',
+      'module' => 'audiorecorderfield',
     ),
   );
 
@@ -140,7 +140,7 @@ function voxbox_og_content_default_fields() {
     'list_default' => 1,
     'description_field' => '0',
     'widget' => array(
-      'file_extensions' => NULL,
+      'file_extensions' => 'mp3 wav',
       'file_path' => NULL,
       'progress_indicator' => NULL,
       'max_filesize_per_file' => NULL,
@@ -148,8 +148,8 @@ function voxbox_og_content_default_fields() {
       'label' => 'Audio Greeting',
       'weight' => '10',
       'description' => '',
-      'type' => 'audiofield_widget',
-      'module' => 'audiofield',
+      'type' => 'audiorecorderfield_widget',
+      'module' => 'audiorecorderfield',
     ),
   );
 
@@ -189,7 +189,7 @@ function voxbox_og_content_default_fields() {
     'list_default' => 1,
     'description_field' => '0',
     'widget' => array(
-      'file_extensions' => NULL,
+      'file_extensions' => 'mp3 wav',
       'file_path' => NULL,
       'progress_indicator' => NULL,
       'max_filesize_per_file' => NULL,
@@ -197,8 +197,8 @@ function voxbox_og_content_default_fields() {
       'label' => 'Audio Name',
       'weight' => '8',
       'description' => '',
-      'type' => 'audiofield_widget',
-      'module' => 'audiofield',
+      'type' => 'audiorecorderfield_widget',
+      'module' => 'audiorecorderfield',
     ),
   );
 

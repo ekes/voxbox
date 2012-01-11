@@ -1,5 +1,6 @@
 core = "6.x"
 dependencies[] = "audiofield"
+dependencies[] = "audiorecorderfield"
 dependencies[] = "draggableviews"
 dependencies[] = "features"
 dependencies[] = "fieldgroup"
