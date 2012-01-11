@@ -133,4 +133,4 @@ libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEd
 ; http://github.com/jwagener/recorder.js
 libraries[audiorecorderfield][download][type] = "get"
 libraries[audiorecorderfield][download][url] = "http://github.com/jwagener/recorder.js/raw/881498c1b8dbb8b10bc480be6fbad8b723fb1895/recorder.swf"
-libraries[audiorecorderfield][subdir] = "modules/contrib/audiorecorderfield/recorders"
+libraries[audiorecorderfield][destination] = "modules/contrib/audiorecorderfield/recorders"
