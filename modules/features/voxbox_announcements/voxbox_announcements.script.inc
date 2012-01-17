@@ -7,9 +7,11 @@
 function _voxbox_announcements_node_script($node) {
   $script = new VoipScript('voxbox_announcement');
   $script->addLabel('begin');
-  $script->addSay($node->title);
-  $script->addSay($node->body);
-  if (!empty($script->field_voipnode_adesc[0]['fid'])) {
+  if (!empty($node->field_voipnode_adesc[0]['fid'])) {
+    $script->addSay(url($node->field_voipnode_adesc[0]['filepath']));
+  }
+  else {
+    $script->addSay($node->body);
   }
 
   $script->addLabel('options');
@@ -23,5 +25,17 @@ function _voxbox_announcements_node_script($node) {
   $script->addLabel('return');
   $script->addReturn();
  
+  return $script;
+}
+
+/**
+ * @file
+ *   voipscripts for voxbox announcements content type.
+ */
+function _voxbox_announcements_node_detail_script($node) {
+  $script = new VoipScript('voxbox_announcement_detail');
+  $script->setVar('user', $node->name);
+  $script->setVar('created', format_date($node->created, 'custom', 'F, jS \a\t g:i a')); 
+  $script->addSay('This announcement was made by %user, on %created.');
   return $script;
 }
