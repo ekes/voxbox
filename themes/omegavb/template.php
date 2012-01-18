@@ -65,9 +65,13 @@ function omegavb_preprocess_page(&$vars, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 function omegavb_preprocess_node(&$vars, $hook) {
+  $node = $vars['node'];
+
   if (! empty($vars['voipextension_number'])) {
     $vars['voipextension_number'] = t('Extension number:') . ' ' . $vars['voipextension_number'];
   }
+  # we don't show compulsory auto created node titles.
+  $vars['autotitle'] = (auto_nodetitle_get_setting($node->type) == AUTO_NODETITLE_ENABLED);
 }
 
 /**
