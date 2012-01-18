@@ -26,7 +26,7 @@ function voxbox_profile_modules() {
     /* other contrib */
     'install_profile_api', 'autoload',
     'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
-    'views', 'views_ui', 'draggableviews', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 'node_autotitle', 
+    'views', 'views_ui', 'draggableviews', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 'auto_nodetitle', 
     'admin_menu', 'wysiwyg', 'better_formats', 'vertical_tabs',
     'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node',
   );

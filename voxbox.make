@@ -54,7 +54,7 @@ projects[token][subdir] = "contrib"
 projects[transliteration][version] = 3.0
 projects[transliteration][type] = "module"
 projects[transliteration][subdir] = "contrib"
-projects[auto_nodetitle][version] = 1.0
+projects[auto_nodetitle][version] = 1.2
 projects[auto_nodetitle][type] = "module"
 projects[auto_nodetitle][subdir] = "contrib"
 ; essential contrib for project
