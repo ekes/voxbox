@@ -118,6 +118,10 @@ projects[voipviews][download][type] = "git"
 projects[voipviews][download][url] = "git://github.com/ekes/voipviews.git"
 projects[voipviews][download][branch] = "6.x-2.x"
 projects[voipviews][subdir] = "contrib"
+projects[voipuser][type] = "module"
+projects[voipuser][download][type] = "git"
+projects[voipuser][download][url] = "git://github.com/ekes/voicemail.git"
+projects[voipuser][subdir] = "contrib"
 
 ; Themes
 ; --------
