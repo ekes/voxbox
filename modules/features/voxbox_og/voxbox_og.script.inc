@@ -1,54 +1,117 @@
 <?php
 
+/**
+ * @file
+ *   Voxbox Organic Groups VoIP Scripts.
+ */
+
+/**
+ * VoIP Script Callback: Organic group options.
+ *
+ * $param['nid'] = Node ID.
+ */
 function _voxbox_og_node_script($node) {
   $script = new VoipScript('voxbox_og');
   $script->addLabel('begin');
-  if (!empty($node->field_voipnode_aname[0]['fid'])) {
-    $script->addSay(url($node->field_voipnode_aname[0]['filepath']));
-  }
-  else {
-    $script->addSay($node->title . '. ');
-  }
-  if (!empty($node->field_voipnode_agreet[0]['fid'])) {
-    $script->addSay(url($node->field_voipnode_agreet[0]['filepath']));
-  }
-  $script->addGoto('options');
-
-  $script->addLabel('menu');
-  if (!empty($node->field_voipnode_aname[0]['fid'])) {
-    $script->addSay(url($node->field_voipnode_aname[0]['filepath']));
-  }
-  else {
-    $script->addSay($node->title . '. ');
-  }
-
-  $script->addLabel('options');
-  if (empty($node->field_voipnode_adesc[0]['fid'])) {
-    $script->addRunIvrMenu(t('To listen to current announcements, dial 1. To record a message to the administrators, dial 2. To go back to the main menu, press the pound key.'), array(1 => 'announcements', '2' => 'voicemail', '#' => 'return'));
-  }
-  else {
-    $script->addRunIvrMenu(t('To listen to current announcements, dial 1. To record a message to the administrators, dial 2. To learn more about this voxbox, dial 3. To go back to the main menu, press the pound key.'), array(1 => 'announcements', '2' => 'voicemail', '3' => 'description', '#' => 'return'));
-  }
-  $script->addGoto('%ivr_option_selected');
-  $script->addLabel('no_input_received');
-  $script->addSay('Selection not recognized.');
-  $script->addGoto('options');
-
-  $script->addLabel('voicemail');
-  $script->addGosub('voicemail_node_basic', array('nid' => $node->nid));
-  $script->addGoto('menu');
-
-  $script->addLabel('announcements');
+  $script->addSay($node->title . '. ');
+  $script->addLabel('intro');
+  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To return and select another group press the pound key.') . ' ';
+  $script->addGetInput($text, 1, '', 6);
+  $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
+  $script->addGotoIf('play_announcements', "^%input_digits == '1'");
+  $script->addGotoIf('record_announcement', "^%input_digits == '2'");
+  $script->addGotoIf('return', "^%input_digits == '#'");
+  $script->addSay(t('Input not recognised'));
+  $script->addGoto('intro');
+  $script->addLabel('play_announcements');
   $params = array('view_name' => 'og_ghp_ron_voip', 'display_id' => 'voipviews_1', 'args' => json_encode(array($node->nid)));
   $script->addGosub('voipviews_read_view', $params);
-  $script->addGoto('menu');
+  $script->addGoto('begin');
 
-  $script->addLabel('description');
-  $script->addSay(url($node->field_voipnode_adesc[0]['filepath']));
-  $script->addGoto('menu');
+  $script->addLabel('start_voicemail');
+  $script->addGosub('voicemail_node_basic', array('nid' => $node->nid));
+  $script->addGoto('begin');
+
+  $script->addLabel('record_announcement');
+  $script->addGosub('voxbox_og_record_announcement', array('nid' => $node->nid));
+  // @todo record script, just base on voicemail, but login first and save to
+  // node... We need the call the script with the group id, that's it.
+  $script->addGoto('begin');
 
   $script->addLabel('return');
   $script->addReturn();
+  return $script;
+}
+
+/**
+ * VoIP Script Callback: Record announcment node to group.
+ *
+ * $param['nid'] = Node ID.
+ */
+function _voxbox_og_record_announcement($node) {
+  $script = new VoipScript('voxbox_og_record_announcement');
+
+  $script->addSet('og_group', $node->title);
+
+  $script->addLabel('start');
+  $script->addRecord(
+    'Start recording your message for %og_group after the tone. Press the pound key to stop recording.', 
+    5, '#', 3600, 'mp3', TRUE
+  );
+  $script->addSay('You said %recording_public_url');
+  
+  $script->addLabel('accept menu');
+  $script->addGetInput(
+    'To accept this recording, press 1. To record it once again, press 2. To return, press the pound key.',
+    5, '', 1
+  );
+  $script->addGotoIf('accept recording', "^%input_digits == '1'");
+  $script->addGotoIf('start', "^%input_digits == '2'");
+  $script->addGotoIf('end record', "^%input_digits == '#'");
+  $script->addSay(t('Invalid input received. Please try again.'));
+  $script->addGoto('accept menu');
+
+  $script->addLabel('accept recording');
+  $script->addGosub('voxbox_og_save_announcement', array('nid' => $node->nid, 'fid' => '%recording_fid'));
+
+  $script->addLabel('end record');
+  $script->addReturn();
 
   return $script;
+}
+
+/**
+ * VoIP Script Callback: Save announcment file to node.
+ *
+ * $param['nid'] = Group node ID.
+ * $param['fid'] = File ID (%recording_fid).
+ */
+function _voxbox_og_save_announcement($nid, $fid) {
+  global $user;
+  $script = new VoipScript('voxbox_og_save_announcement');
+
+  $node = new StdClass();
+  $node->type = 'announcement';
+  $node->status = 1;
+  $node->title = ''; // autogenerated
+  $node->uid = $user->uid; // required?
+  $field = content_fields('field_voipnode_adesc', 'announcement');
+  $target_dir = filefield_widget_file_path($field, $user);
+  $file = db_fetch_object(db_query('SELECT * FROM {files} WHERE fid = %d', $fid));
+  if (! file_copy($file, $target_dir,  FILE_EXISTS_RENAME)) {
+    watchdog('voxbox_og', 'Upload error. Could not move file %file to destination %destination.', array('%file' => $file->filename, '%destination' => $target_dir));
+    $script->addSay('Error saving announcement.');
+    return $script;
+  }
+  $file = (array) $file;
+  $file['list'] = array();
+  if ($field['list_field']) {
+    $file['list'] = $field['list_default'];
+  }
+  $node->field_voipnode_adesc[0] = $file;
+  
+  node_save($node);
+
+  $script->addSay('Announcement saved.');
+  return $script; 
 }
