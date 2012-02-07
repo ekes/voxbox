@@ -128,6 +128,21 @@ projects[voipuser][download][type] = "git"
 projects[voipuser][download][url] = "git://github.com/ekes/voipuser.git"
 projects[voipuser][subdir] = "contrib"
 
+; Notifications
+projects[messaging][subdir] = "contrib"
+projects[messaging][version] = 2.4
+projects[notifications][subdir] = "contrib"
+projects[notifications][version] = 2.3
+; temporarily using git dev version of messaging_voip
+projects[messaging_voip][type] = "module"
+projects[messaging_voip][download][type] = "git"
+projects[messaging_voip][download][url] = "git://git.iskra.net/drupal/contrib/messaging_voip"
+projects[messaging_voip][download][branch] = "add_pull_method"
+projects[messaging_voip][subdir] = "contrib"
+; presently a dependency for messaging_voip
+projects[job_scheduler][subdir] = "contrib"
+
+
 ; Themes
 ; --------
 projects[omega][version] = 1.0
