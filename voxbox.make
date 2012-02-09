@@ -151,7 +151,6 @@ projects[messaging_voip][subdir] = "contrib"
 ; presently a dependency for messaging_voip
 projects[job_scheduler][subdir] = "contrib"
 
-
 ; Themes
 ; --------
 projects[omega][version] = 1.0
