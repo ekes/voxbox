@@ -28,7 +28,7 @@ function voxbox_profile_modules() {
     'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
     'views', 'views_ui', 'draggableviews', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 'auto_nodetitle', 
     'admin_menu', 'wysiwyg', 'better_formats', 'vertical_tabs',
-    'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node', 'voipuser', 'voipnumber',
+    'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node', 'voipusernumber', 'voipnumber',
   );
 }
 
