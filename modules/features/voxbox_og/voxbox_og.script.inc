@@ -51,7 +51,7 @@ function _voxbox_og_node_script($node) {
 function _voxbox_og_record_announcement($node) {
   $script = new VoipScript('voxbox_og_record_announcement');
  
-  $script->addGosub('voipuser_autologin', array('number' => '%caller_number', 'create' => TRUE));
+  $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number', 'create' => TRUE));
   $script->addSet('og_group', $node->title);
 
   $script->addLabel('start');
