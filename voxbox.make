@@ -127,7 +127,7 @@ projects[voipviews][download][branch] = "6.x-2.x"
 projects[voipviews][subdir] = "contrib"
 projects[voipusernumber][type] = "module"
 projects[voipusernumber][download][type] = "git"
-projects[voipusernumber][download][url] = "git://github.com/ekes/voipuser.git"
+projects[voipusernumber][download][url] = "git://github.com/ekes/voipusernumber.git"
 projects[voipusernumber][subdir] = "contrib"
 
 ; Themes
