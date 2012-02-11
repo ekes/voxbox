@@ -6,6 +6,14 @@
 function voxbox_user_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: Administer VoIP user numbers
+  $permissions['Administer VoIP user numbers'] = array(
+    'name' => 'Administer VoIP user numbers',
+    'roles' => array(
+      '0' => 'site admin',
+    ),
+  );
+
   // Exported permission: Allow Reordering
   $permissions['Allow Reordering'] = array(
     'name' => 'Allow Reordering',
@@ -28,6 +36,22 @@ function voxbox_user_user_default_permissions() {
     'name' => 'Delete own voicemail',
     'roles' => array(
       '0' => 'site admin',
+    ),
+  );
+
+  // Exported permission: Edit own VoIP user number
+  $permissions['Edit own VoIP user number'] = array(
+    'name' => 'Edit own VoIP user number',
+    'roles' => array(
+      '0' => 'authenticated user',
+    ),
+  );
+
+  // Exported permission: Have VoIP user number
+  $permissions['Have VoIP user number'] = array(
+    'name' => 'Have VoIP user number',
+    'roles' => array(
+      '0' => 'authenticated user',
     ),
   );
 
@@ -485,6 +509,12 @@ function voxbox_user_user_default_permissions() {
   // Exported permission: use PHP for block visibility
   $permissions['use PHP for block visibility'] = array(
     'name' => 'use PHP for block visibility',
+    'roles' => array(),
+  );
+
+  // Exported permission: use default voip number
+  $permissions['use default voip number'] = array(
+    'name' => 'use default voip number',
     'roles' => array(),
   );
 
