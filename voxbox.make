@@ -48,8 +48,12 @@ projects[autoload][subdir] = "contrib"
 projects[install_profile_api][version] = 2.1
 projects[install_profile_api][type] = "module"
 projects[install_profile_api][subdir] = "contrib"
-projects[token][version] = 1.18
+; Token dev version needed to avoid warnings related to
+; https://drupal.org/node/1329024
 projects[token][type] = "module"
+projects[token][download][type] = "git"
+projects[token][download][url] = "git://git.drupal.org/project/token.git"
+projects[token][download][branch] = "6.x-1.x"
 projects[token][subdir] = "contrib"
 projects[transliteration][version] = 3.0
 projects[transliteration][type] = "module"
