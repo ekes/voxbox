@@ -13,15 +13,28 @@
 function _voxbox_og_node_script($node) {
   $script = new VoipScript('voxbox_og');
   $script->addLabel('begin');
+  // does this need to be subroutined?
+  $script->addSet('voxbox_og_gid', $node->nid);
+  $script->addSet('voxbox_og_subscribed', '^_voxbox_og_notifications_subscribed(%user_uid, %voxbox_og_gid)');
+  $script->addGotoIf('not_subscribed', '^%voxbox_og_subscribed == 0');
+  $script->addSet('voxbox_og_sub_description', 'unsubscribe from');
+  $script->addGoto('title');
+  $script->addLabel('not_subscribed');
+  $script->addSet('voxbox_og_sub_description', 'subscribe to');
+  // --
+  $script->addLabel('title');
   $script->addSay($node->title . '. ');
   $script->addLabel('intro');
-  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To subscribe or unsubscribe from announcements in this group press 3. To return and select another group press the pound key.') . ' ';
+  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To %voxbox_og_sub_description announcements in this group press 3. To return and select another group press the pound key.') . ' ';
   $script->addGetInput($text, 1, '', 6);
+  $script->addGotoIf('not_recognised', "^%input_digits == ''");
   $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
   $script->addGotoIf('play_announcements', "^%input_digits == '1'");
   $script->addGotoIf('record_announcement', "^%input_digits == '2'");
-  $script->addGotoIf('subscribe', "^%input_digits == '3'");
+  $script->addGotoIf('subscribe', "^%input_digits == '3' && %voxbox_og_subscribed == 0");
+  $script->addGotoIf('unsubscribe', "^%input_digits' == '3' && %voxbox_og_subscribed != 0");
   $script->addGotoIf('return', "^%input_digits == '#'");
+  $script->addLabel('not_recognised');
   $script->addSay(t('Input not recognised'));
   $script->addGoto('intro');
   $script->addLabel('play_announcements');
@@ -39,8 +52,14 @@ function _voxbox_og_node_script($node) {
   // node... We need the call the script with the group id, that's it.
   $script->addGoto('begin');
 
+  $script->addLabel('unsubscribe');
+  $script->addGosub('voxbox_og_notifications_unsubscribe', array('gid' => $node->nid));
+  $script->addGoto('begin');
+
   $script->addLabel('subscribe');
-  $script->addGosub('voxbox_og_notifications_subscribe_menu');
+  // Log in - with user creation (a 'gosub if' would make sense here).
+  $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number', 'create' => TRUE));
+  $script->addGosub('voxbox_og_notifications_subscribe', array('gid' => $node->nid));
   $script->addGoto('begin');
 
   $script->addLabel('return');
@@ -136,11 +155,12 @@ function _voxbox_og_save_announcement($nid, $fid) {
 function _voxbox_og_notifications_subscribe($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_notifications_subscribe');
-
+watchdog('DEBUG', '_voxbox_og_notifications_subscribe');
+watchdog('DEBUG', "gid $gid uid " . $user->uid);
   // Have to join the group to subscribe to notifications.
-  og_save_subscription($gid, $user->uid, array('is_active' => 1));
-  // Auto notifications subscription would do this.
   og_notifications_user_subscribe($user, $gid);
+  // Auto notifications subscription would do this.
+  og_save_subscription($gid, $user->uid, array('is_active' => 1));
   $script->addSay('You are subscribed.');
   return $script;
 }
@@ -156,10 +176,14 @@ function _voxbox_og_notifications_subscribe($gid) {
 function _voxbox_og_notifications_unsubscribe($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_notifications_unsubscribe');
+watchdog('DEBUG', '_voxbox_og_notifications_unsubscribe');
+watchdog('DEBUG', "gid $gid uid " . $user->uid);
 
   og_notifications_user_unsubscribe($user, $gid);
   // Consistent and simple option is reverse of subscribe,
   // thus unsubscribing group membership as well as from
   // announcements.
   og_delete_subscription($gid, $user->uid);
+  $script->addSay('Your have been unsubscribed.');
+  return $script;
 }
