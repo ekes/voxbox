@@ -117,3 +117,44 @@ function _voxbox_og_save_announcement($nid, $fid) {
   $script->addSay('Announcement saved.');
   return $script; 
 }
+
+/**
+ * VoIP Script Callback: Subscribe to a group.
+ *
+ * Log user in before calling this script. The notification subscription
+ * type is the default for the user (or site if user default not
+ * set/altered).
+ *
+ * @param int $gid
+ *   Group ID.
+ */
+function _voxbox_og_notifications_subscribe($gid) {
+  global $user;
+  $script = new VoipScript('voxbox_og_notifications_subscribe');
+
+  // Have to join the group to subscribe to notifications.
+  og_save_subscription($gid, $user->uid, array('is_active' => 1));
+  // Auto notifications subscription would do this.
+  og_notifications_user_subscribe($user, $gid);
+  $script->addSay('You are subscribed.');
+  return $script;
+}
+
+/**
+ * VoIP Script Callback: Unsubscribe to a group.
+ *
+ * Log user in before calling this script.
+ *
+ * @param int $gid
+ *   Group ID.
+ */
+function _voxbox_og_notifications_unsubscribe($gid) {
+  global $user;
+  $script = new VoipScript('voxbox_og_notifications_unsubscribe');
+
+  og_notifications_user_unsubscribe($user, $gid);
+  // Consistent and simple option is reverse of subscribe,
+  // thus unsubscribing group membership as well as from
+  // announcements.
+  og_delete_subscription($gid, $user->uid);
+}

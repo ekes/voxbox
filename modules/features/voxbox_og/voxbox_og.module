@@ -6,19 +6,24 @@ include_once('voxbox_og.features.inc');
  * Implementation of hook_voipscript_load_script().
  */
 function voxbox_og_voipscript_load_script($script_name, $params = NULL) {
-  if ($script_name == 'voxbox_og_node_script') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    $node = node_load($params['nid']);
-    return _voxbox_og_node_script($node);
-  }
-  elseif ($script_name == 'voxbox_og_record_announcement') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    $node = node_load($params['nid']);
-    return _voxbox_og_record_announcement($node);
-  }
-  elseif ($script_name == 'voxbox_og_save_announcement') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    return _voxbox_og_save_announcement($params['nid'], $params['fid']);
+  switch ($script_name) {
+    case 'voxbox_og_node_script':
+      module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+      $node = node_load($params['nid']);
+      return _voxbox_og_node_script($node);
+    case 'voxbox_og_record_announcement':
+      module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+      $node = node_load($params['nid']);
+      return _voxbox_og_record_announcement($node);
+    case 'voxbox_og_save_announcement':
+      module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+      return _voxbox_og_save_announcement($params['nid'], $params['fid']);
+    case 'voxbox_og_notifications_subscribe':
+      module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+      return _voxbox_og_notifications_subscribe($parms['gid']);
+    case 'voxbox_og_notifications_unsubscribe':
+      module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+      return _voxbox_og_notifications_unsubscribe($parms['gid']);
   }
 }
 
@@ -30,5 +35,7 @@ function voxbox_og_voipscript_get_script_names() {
     'voxbox_og_node_script',
     'voxbox_og_record_announcement',
     'voxbox_og_save_announcement',
+    'voxbox_og_notifications_subscribe',
+    'voxbox_og_notifications_unsubscribe',
   );
 } 
