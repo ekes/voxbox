@@ -38,4 +38,24 @@ function voxbox_og_voipscript_get_script_names() {
     'voxbox_og_notifications_subscribe',
     'voxbox_og_notifications_unsubscribe',
   );
-} 
+}
+
+/**
+ * Helper function: test if user has any notifications for group.
+ *
+ * @param int $uid
+ *   User ID.
+ * @param int $gid
+ *   Group ID.
+ * 
+ * @return int
+ *   Number of subscriptions to the group.
+ */
+function _voxbox_og_notifications_subscribed($uid, $gid) {
+  // Parameters for notifications_get_subscriptions here are:-
+  // $parmas = array('type' => 'node/taxonomy or in this case grouptype from 
+  // og_notifications', 'uid' => 'user id'),
+  // $conditions of fields = array('group' => 'group id', 'type' => 'content
+  // type, NULL for any)
+  return count(notifications_get_subscriptions(array('type' => 'grouptype', 'uid' => $uid), array('group' => $gid, 'type' => NULL)));
+}

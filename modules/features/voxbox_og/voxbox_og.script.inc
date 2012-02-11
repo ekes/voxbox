@@ -15,11 +15,12 @@ function _voxbox_og_node_script($node) {
   $script->addLabel('begin');
   $script->addSay($node->title . '. ');
   $script->addLabel('intro');
-  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To return and select another group press the pound key.') . ' ';
+  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To subscribe or unsubscribe from announcements in this group press 3. To return and select another group press the pound key.') . ' ';
   $script->addGetInput($text, 1, '', 6);
   $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
   $script->addGotoIf('play_announcements', "^%input_digits == '1'");
   $script->addGotoIf('record_announcement', "^%input_digits == '2'");
+  $script->addGotoIf('subscribe', "^%input_digits == '3'");
   $script->addGotoIf('return', "^%input_digits == '#'");
   $script->addSay(t('Input not recognised'));
   $script->addGoto('intro');
@@ -38,6 +39,10 @@ function _voxbox_og_node_script($node) {
   // node... We need the call the script with the group id, that's it.
   $script->addGoto('begin');
 
+  $script->addLabel('subscribe');
+  $script->addGosub('voxbox_og_notifications_subscribe_menu');
+  $script->addGoto('begin');
+
   $script->addLabel('return');
   $script->addReturn();
   return $script;
@@ -54,7 +59,7 @@ function _voxbox_og_record_announcement($node) {
   $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number', 'create' => TRUE));
   $script->addSet('og_group', $node->title);
 
-  $script->addLabel('start');
+  $script->addLabel('start_recording');
   $script->addRecord(
     'Start recording your message for %og_group after the tone. Press the pound key to stop recording.', 
     5, '#', 3600, 'mp3', TRUE
@@ -66,16 +71,16 @@ function _voxbox_og_record_announcement($node) {
     'To accept this recording, press 1. To record it once again, press 2. To return, press the pound key.',
     5, '', 1
   );
-  $script->addGotoIf('accept recording', "^%input_digits == '1'");
-  $script->addGotoIf('start', "^%input_digits == '2'");
-  $script->addGotoIf('end record', "^%input_digits == '#'");
+  $script->addGotoIf('accept_recording', "^%input_digits == '1'");
+  $script->addGotoIf('start_recording', "^%input_digits == '2'");
+  $script->addGotoIf('end_record', "^%input_digits == '#'");
   $script->addSay(t('Invalid input received. Please try again.'));
   $script->addGoto('accept menu');
 
-  $script->addLabel('accept recording');
+  $script->addLabel('accept_recording');
   $script->addGosub('voxbox_og_save_announcement', array('nid' => $node->nid, 'fid' => '%recording_fid'));
 
-  $script->addLabel('end record');
+  $script->addLabel('end_record');
   $script->addReturn();
 
   return $script;
