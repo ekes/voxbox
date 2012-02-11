@@ -32,7 +32,7 @@ function _voxbox_og_node_script($node) {
   $script->addGotoIf('play_announcements', "^%input_digits == '1'");
   $script->addGotoIf('record_announcement', "^%input_digits == '2'");
   $script->addGotoIf('subscribe', "^%input_digits == '3' && %voxbox_og_subscribed == 0");
-  $script->addGotoIf('unsubscribe', "^%input_digits' == '3' && %voxbox_og_subscribed != 0");
+  $script->addGotoIf('unsubscribe', "^%input_digits == '3' && %voxbox_og_subscribed != 0");
   $script->addGotoIf('return', "^%input_digits == '#'");
   $script->addLabel('not_recognised');
   $script->addSay(t('Input not recognised'));
@@ -155,8 +155,7 @@ function _voxbox_og_save_announcement($nid, $fid) {
 function _voxbox_og_notifications_subscribe($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_notifications_subscribe');
-watchdog('DEBUG', '_voxbox_og_notifications_subscribe');
-watchdog('DEBUG', "gid $gid uid " . $user->uid);
+
   // Have to join the group to subscribe to notifications.
   og_notifications_user_subscribe($user, $gid);
   // Auto notifications subscription would do this.
@@ -176,8 +175,6 @@ watchdog('DEBUG', "gid $gid uid " . $user->uid);
 function _voxbox_og_notifications_unsubscribe($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_notifications_unsubscribe');
-watchdog('DEBUG', '_voxbox_og_notifications_unsubscribe');
-watchdog('DEBUG', "gid $gid uid " . $user->uid);
 
   og_notifications_user_unsubscribe($user, $gid);
   // Consistent and simple option is reverse of subscribe,
