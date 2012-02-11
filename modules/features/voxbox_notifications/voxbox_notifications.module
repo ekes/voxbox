@@ -1,0 +1,3 @@
+<?php
+
+include_once('voxbox_notifications.features.inc');
