@@ -160,9 +160,15 @@ projects[tao][type] = "theme"
 
 ; Libraries
 ; ---------
+; wysiwyg
 libraries[ckeditor][type] = "libraries"
 libraries[ckeditor][download][type] = "file"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
+; audiofield
+libraries[audio-players][type] = "libraries"
+libraries[audio-players][download][type] = "file"
+libraries[audio-players][download][url] = "http://wpaudioplayer.com/wp-content/downloads/audio-player-standalone.zip"
+; audiorecorderfield
 ; http://github.com/jwagener/recorder.js
 ;libraries[audiorecorderfield][download][type] = "get"
 ;libraries[audiorecorderfield][download][url] = "http://github.com/jwagener/recorder.js/raw/881498c1b8dbb8b10bc480be6fbad8b723fb1895/recorder.swf"
