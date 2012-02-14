@@ -165,9 +165,11 @@ libraries[ckeditor][type] = "libraries"
 libraries[ckeditor][download][type] = "file"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
 ; audiofield
-libraries[audio_players][type] = "libraries"
-libraries[audio_players][download][type] = "file"
-libraries[audio_players][download][url] = "http://wpaudioplayer.com/wp-content/downloads/audio-player-standalone.zip"
+libraries[audio_player][type] = "libraries"
+libraries[audio_player][download][type] = "file"
+libraries[audio_player][download][url] = "http://wpaudioplayer.com/wp-content/downloads/audio-player-standalone.zip"
+libraries[audio_player][destination] = "modules/contrib/audio_players"
+libraries[audio_player][directory_name] = "audio-player"
 ; audiorecorderfield
 ; http://github.com/jwagener/recorder.js
 ;libraries[audiorecorderfield][download][type] = "get"
