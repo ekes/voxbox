@@ -168,7 +168,7 @@ libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEd
 libraries[audio_player][type] = "libraries"
 libraries[audio_player][download][type] = "file"
 libraries[audio_player][download][url] = "http://wpaudioplayer.com/wp-content/downloads/audio-player-standalone.zip"
-libraries[audio_player][destination] = "modules/contrib/audio_players"
+libraries[audio_player][destination] = "libraries/audio_players"
 libraries[audio_player][directory_name] = "audio-player"
 ; audiorecorderfield
 ; http://github.com/jwagener/recorder.js
