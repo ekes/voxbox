@@ -95,6 +95,8 @@ projects[audiofield][subdir] = "contrib"
 projects[audiorecorderfield][version] = 1.0-beta1
 projects[audiorecorderfield][type] = "module"
 projects[audiorecorderfield][subdir] = "contrib"
+; https://drupal.org/node/1442402 load API even without hook_init().
+projects[audiorecorderfield][patch][] = "http://drupal.org/files/1442402-01-audiorecorderfield-hook-init.patch"
 ;
 projects[wysiwyg][version] = 2.4
 projects[wysiwyg][type] = "module"
