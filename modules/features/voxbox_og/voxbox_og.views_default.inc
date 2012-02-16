@@ -941,21 +941,21 @@ function voxbox_og_views_default_views() {
       ),
     ),
     'title' => array(
-      'id' => 'title',
-      'table' => 'node',
-      'field' => 'title',
       'operator' => 'contains',
       'value' => '',
       'group' => 0,
       'exposed' => TRUE,
       'expose' => array(
+        'use_operator' => 1,
         'operator' => 'title_oper',
         'identifier' => 'title',
-        'label' => 'Search for a group by name',
-        'optional' => 1,
+        'label' => 'Search for a VoxBox by name',
         'remember' => 0,
       ),
       'case' => 0,
+      'id' => 'title',
+      'table' => 'node',
+      'field' => 'title',
       'relationship' => 'none',
       'expose_button' => array(
         'button' => 'Hide',
@@ -1004,7 +1004,7 @@ function voxbox_og_views_default_views() {
   $handler->override_option('cache', array(
     'type' => 'none',
   ));
-  $handler->override_option('title', 'Groups');
+  $handler->override_option('title', 'VoxBoxes');
   $handler->override_option('empty', 'No groups');
   $handler->override_option('empty_format', '1');
   $handler->override_option('use_ajax', '1');
@@ -1100,6 +1100,83 @@ function voxbox_og_views_default_views() {
   ));
   $handler->override_option('sitename_title', FALSE);
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->override_option('filters', array(
+    'status' => array(
+      'id' => 'status',
+      'table' => 'node',
+      'field' => 'status',
+      'operator' => '=',
+      'value' => 1,
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+    'title' => array(
+      'operator' => 'contains',
+      'value' => '',
+      'group' => 0,
+      'exposed' => TRUE,
+      'expose' => array(
+        'use_operator' => 1,
+        'operator' => 'title_oper',
+        'identifier' => 'title',
+        'label' => 'Search for a VoxBox by name',
+        'remember' => 0,
+      ),
+      'case' => 0,
+      'id' => 'title',
+      'table' => 'node',
+      'field' => 'title',
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Hide',
+      ),
+      'override' => array(
+        'button' => 'Use default',
+      ),
+    ),
+    'type_groups_all' => array(
+      'id' => 'type_groups_all',
+      'table' => 'og',
+      'field' => 'type_groups_all',
+      'operator' => '=',
+      'value' => '',
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+    'directory' => array(
+      'id' => 'directory',
+      'table' => 'og',
+      'field' => 'directory',
+      'operator' => '=',
+      'value' => 1,
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+  ));
   $handler->override_option('path', 'og/all');
   $handler->override_option('menu', array(
     'type' => 'default tab',
@@ -1115,6 +1192,622 @@ function voxbox_og_views_default_views() {
     'weight' => '0',
     'name' => 'navigation',
   ));
+
+  $views[$view->name] = $view;
+
+  // Exported view: og_voxbox_unread
+  $view = new view;
+  $view->name = 'og_voxbox_unread';
+  $view->description = 'Shows unread posts in subscribed groups.';
+  $view->tag = 'og';
+  $view->base_table = 'node';
+  $view->core = 6;
+  $view->api_version = '2';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+  $handler = $view->new_display('default', 'Defaults', 'default');
+  $handler->override_option('relationships', array(
+    'group_nid' => array(
+      'id' => 'group_nid',
+      'table' => 'og_ancestry',
+      'field' => 'group_nid',
+      'label' => 'Group',
+      'required' => 1,
+      'relationship' => 'none',
+    ),
+  ));
+  $handler->override_option('fields', array(
+    'type' => array(
+      'id' => 'type',
+      'table' => 'node',
+      'field' => 'type',
+      'label' => 'Type',
+      'relationship' => 'none',
+      'link_to_node' => 1,
+    ),
+    'title' => array(
+      'id' => 'title',
+      'table' => 'node',
+      'field' => 'title',
+      'label' => 'Title',
+      'relationship' => 'none',
+      'link_to_node' => 1,
+    ),
+    'name' => array(
+      'id' => 'name',
+      'table' => 'users',
+      'field' => 'name',
+      'label' => 'Author',
+      'link_to_user' => 1,
+      'relationship' => 'none',
+    ),
+    'group_nid' => array(
+      'id' => 'group_nid',
+      'table' => 'og_ancestry',
+      'field' => 'group_nid',
+      'label' => 'Groups',
+      'type' => 'separator',
+      'separator' => ', ',
+      'empty' => '',
+      'relationship' => 'none',
+    ),
+  ));
+  $handler->override_option('filters', array(
+    'status' => array(
+      'id' => 'status',
+      'table' => 'node',
+      'field' => 'status',
+      'operator' => '=',
+      'value' => 1,
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+    'timestamp' => array(
+      'id' => 'timestamp',
+      'table' => 'history_user',
+      'field' => 'timestamp',
+      'operator' => '=',
+      'value' => '',
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'relationship' => 'none',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+    'uid' => array(
+      'operator' => '=',
+      'value' => 1,
+      'group' => 0,
+      'exposed' => FALSE,
+      'expose' => array(
+        'operator' => FALSE,
+        'label' => '',
+      ),
+      'id' => 'uid',
+      'table' => 'og_uid',
+      'field' => 'uid',
+      'relationship' => 'group_nid',
+      'expose_button' => array(
+        'button' => 'Expose',
+      ),
+    ),
+  ));
+  $handler->override_option('access', array(
+    'type' => 'role',
+    'role' => array(
+      2 => 2,
+    ),
+  ));
+  $handler->override_option('cache', array(
+    'type' => 'none',
+  ));
+  $handler->override_option('title', 'Unread posts in my VoxBoxes');
+  $handler->override_option('empty', 'There are no new posts in your VoxBoxes.');
+  $handler->override_option('empty_format', '1');
+  $handler->override_option('items_per_page', 25);
+  $handler->override_option('use_pager', '1');
+  $handler->override_option('style_plugin', 'table');
+  $handler->override_option('style_options', array(
+    'grouping' => '',
+    'override' => 1,
+    'sticky' => 0,
+    'order' => 'asc',
+    'summary' => '',
+    'columns' => array(
+      'type' => 'type',
+      'title' => 'title',
+      'name' => 'name',
+      'group_nid' => 'group_nid',
+    ),
+    'info' => array(
+      'type' => array(
+        'sortable' => 0,
+        'separator' => '',
+      ),
+      'title' => array(
+        'sortable' => 0,
+        'separator' => '',
+      ),
+      'name' => array(
+        'sortable' => 0,
+        'separator' => '',
+      ),
+      'group_nid' => array(
+        'separator' => '',
+      ),
+    ),
+    'default' => '-1',
+  ));
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->override_option('path', 'group/myunread');
+  $handler->override_option('menu', array(
+    'type' => 'default tab',
+    'title' => 'My Unread',
+    'description' => '',
+    'weight' => '0',
+    'name' => 'navigation',
+  ));
+  $handler->override_option('tab_options', array(
+    'type' => 'normal',
+    'title' => 'My Unread',
+    'description' => '',
+    'weight' => '0',
+    'name' => 'navigation',
+  ));
+  $handler = $view->new_display('feed', 'Feed', 'feed');
+  $handler->override_option('style_plugin', 'rss');
+  $handler->override_option('style_options', array(
+    'mission_description' => FALSE,
+    'description' => '',
+  ));
+  $handler->override_option('row_plugin', 'node_rss');
+  $handler->override_option('row_options', array(
+    'item_length' => 'default',
+  ));
+  $handler->override_option('path', 'group/myunread/feed');
+  $handler->override_option('menu', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('tab_options', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('displays', array(
+    'page' => 'page',
+    'default' => 0,
+  ));
+  $handler->override_option('sitename_title', FALSE);
+  $handler = $view->new_display('voipviews', 'VoIP', 'voipviews_1');
+  $handler->override_option('fields', array(
+    'nid' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 0,
+      'link_to_node' => 0,
+      'exclude' => 1,
+      'id' => 'nid',
+      'table' => 'node',
+      'field' => 'nid',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'type' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'link_to_node' => 0,
+      'machine_name' => 0,
+      'exclude' => 1,
+      'id' => 'type',
+      'table' => 'node',
+      'field' => 'type',
+      'relationship' => 'none',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+    ),
+    'field_voipnode_adesc_fid' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 0,
+      'link_to_node' => 0,
+      'label_type' => 'none',
+      'format' => 'url_plain',
+      'multiple' => array(
+        'group' => TRUE,
+        'multiple_number' => '',
+        'multiple_from' => '',
+        'multiple_reversed' => FALSE,
+      ),
+      'exclude' => 1,
+      'id' => 'field_voipnode_adesc_fid',
+      'table' => 'node_data_field_voipnode_adesc',
+      'field' => 'field_voipnode_adesc_fid',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'body' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 1,
+        'text' => 'A new [type]. [field_voipnode_adesc_fid] [body].',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 0,
+      'exclude' => 0,
+      'id' => 'body',
+      'table' => 'node_revisions',
+      'field' => 'body',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'gosub' => array(
+      'gosub_script' => 'voipviews_node_tag_new',
+      'gosub_params' => '{ "nid" : [nid] }',
+      'exclude' => '',
+      'id' => 'gosub',
+      'table' => 'voipviews',
+      'field' => 'gosub',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'name' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'link_to_user' => 0,
+      'overwrite_anonymous' => 0,
+      'anonymous_text' => '',
+      'exclude' => 1,
+      'id' => 'name',
+      'table' => 'users',
+      'field' => 'name',
+      'relationship' => 'none',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+    ),
+    'created' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => 1,
+        'text' => 'Posted on [created] by [name]. [field_voipnode_adesc_fid] [body].',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'date_format' => 'large',
+      'custom_date_format' => '',
+      'exclude' => 0,
+      'id' => 'created',
+      'table' => 'node',
+      'field' => 'created',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'ivr_goto_menu' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => FALSE,
+        'text' => '',
+        'make_link' => FALSE,
+        'path' => '',
+        'absolute' => '',
+        'alt' => '',
+        'rel' => '',
+        'link_class' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'trim' => FALSE,
+        'max_length' => '',
+        'word_boundary' => TRUE,
+        'ellipsis' => TRUE,
+        'strip_tags' => TRUE,
+        'html' => FALSE,
+      ),
+      'empty' => '',
+      'hide_empty' => NULL,
+      'empty_zero' => NULL,
+      'hide_alter_empty' => 1,
+      'exclude' => 0,
+      'id' => 'ivr_goto_menu',
+      'table' => 'voipviews',
+      'field' => 'ivr_goto_menu',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'ivr_next_row' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => FALSE,
+        'text' => '',
+        'make_link' => FALSE,
+        'path' => '',
+        'absolute' => '',
+        'alt' => '',
+        'rel' => '',
+        'link_class' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'trim' => FALSE,
+        'max_length' => '',
+        'word_boundary' => TRUE,
+        'ellipsis' => TRUE,
+        'strip_tags' => TRUE,
+        'html' => FALSE,
+      ),
+      'empty' => '',
+      'hide_empty' => NULL,
+      'empty_zero' => NULL,
+      'hide_alter_empty' => 1,
+      'exclude' => 0,
+      'id' => 'ivr_next_row',
+      'table' => 'voipviews',
+      'field' => 'ivr_next_row',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'ivr_return' => array(
+      'label' => '',
+      'alter' => array(
+        'alter_text' => FALSE,
+        'text' => '',
+        'make_link' => FALSE,
+        'path' => '',
+        'absolute' => '',
+        'alt' => '',
+        'rel' => '',
+        'link_class' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'trim' => FALSE,
+        'max_length' => '',
+        'word_boundary' => TRUE,
+        'ellipsis' => TRUE,
+        'strip_tags' => TRUE,
+        'html' => FALSE,
+      ),
+      'empty' => '',
+      'hide_empty' => NULL,
+      'empty_zero' => NULL,
+      'hide_alter_empty' => 1,
+      'exclude' => 0,
+      'id' => 'ivr_return',
+      'table' => 'voipviews',
+      'field' => 'ivr_return',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+  ));
+  $handler->override_option('empty', 'There are no new posts in your Vox Boxes.');
+  $handler->override_option('empty_format', 0);
+  $handler->override_option('style_plugin', 'voipviews_list');
+  $handler->override_option('style_options', array(
+    'grouping' => '',
+  ));
+  $handler->override_option('row_plugin', 'voipviews_row_ivr');
+  $handler->override_option('row_options', array(
+    'ivr_prompt_intro' => '',
+    'ivr_invalid_msg' => 'Invalid option selected.',
+    'ivr_no_input_msg' => 'Invalid option selected.',
+    'ivr_max_attempts' => '3',
+    'ivr_timeout' => '5',
+    'ivr_options' => array(
+      'body' => '',
+      'gosub' => '',
+      'created' => '1',
+      'ivr_goto_menu' => '1',
+      'ivr_next_row' => '2',
+      'ivr_return' => '#',
+    ),
+    'ivr_prompt' => array(
+      '\\0' => '',
+      '\\1' => 'To hear more details press 1.',
+      '\\2' => 'To go to the next announcement press 2.',
+      '\\3' => '',
+      '\\4' => '',
+      '\\5' => '',
+      '\\6' => '',
+      '\\7' => '',
+      '\\8' => '',
+      '\\9' => '',
+      '\\*' => '',
+      '\\#' => 'To go back to the voxbox menu, dial the pound key.',
+    ),
+    'ivr_notfirst' => array(
+      '\\0' => 0,
+      '\\1' => 0,
+      '\\2' => 0,
+      '\\3' => 0,
+      '\\4' => 0,
+      '\\5' => 0,
+      '\\6' => 0,
+      '\\7' => 0,
+      '\\8' => 0,
+      '\\9' => 0,
+      '\\*' => 0,
+      '\\#' => 0,
+    ),
+    'ivr_notlast' => array(
+      '\\0' => 0,
+      '\\1' => 0,
+      '\\2' => 1,
+      '\\3' => 0,
+      '\\4' => 0,
+      '\\5' => 0,
+      '\\6' => 0,
+      '\\7' => 0,
+      '\\8' => 0,
+      '\\9' => 0,
+      '\\*' => 0,
+      '\\#' => 0,
+    ),
+  ));
+  $handler->override_option('voipextension_enable', 0);
+  $handler->override_option('voipextension_directory_type', 1);
+  $handler->override_option('voipextension_title', '');
+  $handler->override_option('voipextension_description', '');
 
   $views[$view->name] = $view;
 
