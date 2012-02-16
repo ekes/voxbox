@@ -26,6 +26,10 @@ function voxbox_og_voipscript_load_script($script_name, $params = NULL) {
       return _voxbox_og_notifications_subscribe($params['gid']);
     case 'voxbox_og_notifications_unsubscribe':
       return _voxbox_og_notifications_unsubscribe($params['gid']);
+    case 'voxbox_og_subscribe_user':
+      return _voxbox_og_subscribe_user($params['gid']);
+    case 'voxbox_og_delete_subscription':
+      return _voxbox_og_delete_subscription($params['gid']);
   }
 }
 
@@ -38,8 +42,11 @@ function voxbox_og_voipscript_get_script_names() {
     'voxbox_og_record_announcement',
     'voxbox_og_save_announcement',
     'voxbox_og_notifications_Status',
+    // Helper scripts, forces correct update of user variable:-
     'voxbox_og_notifications_subscribe',
     'voxbox_og_notifications_unsubscribe',
+    'voxbox_og_subscribe_user',
+    'voxbox_og_delete_subscription',
   );
 }
 

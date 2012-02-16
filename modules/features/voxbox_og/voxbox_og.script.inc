@@ -13,26 +13,52 @@
 function _voxbox_og_node_script($node) {
   $script = new VoipScript('voxbox_og');
   $script->addLabel('begin');
-  // does this need to be subroutined?
+$script->addLog('begin');
   $script->addSet('voxbox_og_gid', $node->nid);
-  $script->addSet('voxbox_og_subscribed', '^_voxbox_og_notifications_subscribed(%user_uid, %voxbox_og_gid)');
-  $script->addGotoIf('not_subscribed', '^%voxbox_og_subscribed == 0');
-  $script->addSet('voxbox_og_sub_description', 'unsubscribe from');
-  $script->addGoto('title');
-  $script->addLabel('not_subscribed');
-  $script->addSet('voxbox_og_sub_description', 'subscribe to');
-  // --
+
+  // if (member of group:
+  $script->addSet('voxbox_og_member', '^og_is_group_member(%voxbox_og_gid, FALSE, %user_uid)');
+$script->addLog('checked it\'s %voxbox_og_member');
+  $script->addGotoIf('not_member', '^%voxbox_og_member == 0');
+  // )
+  // {
+    $script->addLabel('member');
+    // @todo we really need the logic of
+    // og_men_access_unsubscribe() here.
+    $script->addSet('voxbox_og_option_3', 'To stop following this Vox Box press 3.');
+    // if (subscribed for notifications:
+    $script->addSet('voxbox_og_subscribed', '^_voxbox_og_notifications_subscribed(%user_uid, %voxbox_og_gid)');
+    $script->addGotoIf('not_subscribed', '^%voxbox_og_subscribed == 0');
+    // )
+    // {
+      $script->addSet('voxbox_og_option_4', 'To stop receieving alerts of announcements, press 4.');
+      $script->addGoto('title');
+    // }
+    // {
+      $script->addLabel('not_subscribed');
+      $script->addSet('voxbox_og_option_4', 'To receieve SMS alerts of announcements, press 4.');
+      $script->addGoto('title');
+    // }
+  // }
+  // {
+    $script->addLabel('not_member');
+    $script->addSet('voxbox_og_option_3', 'To follow this Vox Box press, 3.');
+    $script->addSet('voxbox_og_option_4', '');
+  // }
+
   $script->addLabel('title');
   $script->addSay($node->title . '. ');
   $script->addLabel('intro');
-  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. To %voxbox_og_sub_description announcements in this group press 3. To return and select another group press the pound key.') . ' ';
+  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. %voxbox_og_option_3 %voxbox_og_option_4 To return and select another group press the pound key.') . ' ';
   $script->addGetInput($text, 1, '', 6);
   $script->addGotoIf('not_recognised', "^%input_digits == ''");
   $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
   $script->addGotoIf('play_announcements', "^%input_digits == '1'");
   $script->addGotoIf('record_announcement', "^%input_digits == '2'");
-  $script->addGotoIf('subscribe', "^%input_digits == '3' && %voxbox_og_subscribed == 0");
-  $script->addGotoIf('unsubscribe', "^%input_digits == '3' && %voxbox_og_subscribed != 0");
+  $script->addGotoIf('join_group', "^%input_digits == '3' && %voxbox_og_member == 0");
+  $script->addGotoIf('leave_group', "^%input_digits == '3' && %voxbox_og_member != 0");
+  $script->addGotoIf('subscribe', "^%input_digits == '4' && %voxbox_og_member != 0 && %voxbox_og_subscribed == 0");
+  $script->addGotoIf('unsubscribe', "^%input_digits == '4' && %voxbox_og_member != 0 && %voxbox_og_subscribed != 0");
   $script->addGotoIf('return', "^%input_digits == '#'");
   $script->addLabel('not_recognised');
   $script->addSay(t('Input not recognised'));
@@ -52,13 +78,21 @@ function _voxbox_og_node_script($node) {
   // node... We need the call the script with the group id, that's it.
   $script->addGoto('begin');
 
+  $script->addLabel('join_group');
+  // Log in - with user creation (a 'gosub if' would make sense here).
+  $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number', 'create' => TRUE));
+  $script->addGosub('voxbox_og_subscribe_user', array('gid' => $node->nid));
+  $script->addGoto('begin');
+
+  $script->addLabel('leave_group');
+  $script->addGosub('voxbox_og_delete_subscription', array('gid' => $node->nid));
+  $script->addGoto('begin');
+
   $script->addLabel('unsubscribe');
   $script->addGosub('voxbox_og_notifications_unsubscribe', array('gid' => $node->nid));
   $script->addGoto('begin');
 
   $script->addLabel('subscribe');
-  // Log in - with user creation (a 'gosub if' would make sense here).
-  $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number', 'create' => TRUE));
   $script->addGosub('voxbox_og_notifications_subscribe', array('gid' => $node->nid));
   $script->addGoto('begin');
 
@@ -143,7 +177,7 @@ function _voxbox_og_save_announcement($nid, $fid) {
 }
 
 /**
- * VoIP Script Callback: Subscribe to a group.
+ * VoIP Script Callback: Subscribe to notifications in a group.
  *
  * Log user in before calling this script. The notification subscription
  * type is the default for the user (or site if user default not
@@ -156,8 +190,6 @@ function _voxbox_og_notifications_subscribe($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_notifications_subscribe');
 
-  // Have to join the group to subscribe to notifications.
-  og_notifications_user_subscribe($user, $gid);
   // Auto notifications subscription would do this.
   og_save_subscription($gid, $user->uid, array('is_active' => 1));
   $script->addSay('You are subscribed.');
@@ -165,7 +197,7 @@ function _voxbox_og_notifications_subscribe($gid) {
 }
 
 /**
- * VoIP Script Callback: Unsubscribe to a group.
+ * VoIP Script Callback: Unsubscribe to notifications in a group.
  *
  * Log user in before calling this script.
  *
@@ -177,10 +209,38 @@ function _voxbox_og_notifications_unsubscribe($gid) {
   $script = new VoipScript('voxbox_og_notifications_unsubscribe');
 
   og_notifications_user_unsubscribe($user, $gid);
-  // Consistent and simple option is reverse of subscribe,
-  // thus unsubscribing group membership as well as from
-  // announcements.
-  og_delete_subscription($gid, $user->uid);
   $script->addSay('Your have been unsubscribed.');
+  return $script;
+}
+
+/**
+ * VoIP Script Callback: Runs og_subscribe_user() for current user.
+ *
+ * @param int $gid
+ *   Group ID.
+ */
+function _voxbox_og_subscribe_user($gid) {
+  global $user;
+  $script = new VoipScript('voxbox_og_subscribe_user');
+  $result = og_subscribe_user($gid, $user);
+  // Need to reload the current user to reflect change.
+  $user = user_load(array('uid' => $user->uid));
+  $script->addSay(strip_tags($result['message']));
+  return $script;
+}
+
+/**
+ * VoIP Script Callback: Runs og_delete_subscription() for current user.
+ *
+ * @param int $gid
+ *   Group ID.
+ */
+function _voxbox_og_delete_subscription($gid) {
+  global $user;
+  $script = new VoipScript('voxbox_og_delete_subscription');
+  og_delete_subscription($gid, $user->uid);
+  // Need to reload the current user to reflect change.
+  $user = user_load(array('uid' => $user->uid));
+  $script->addSay('You are no longer following this VoxBox');
   return $script;
 }
