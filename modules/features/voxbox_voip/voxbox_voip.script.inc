@@ -29,7 +29,7 @@ function _voxbox_voip_welcome() {
   $script->addLabel('request_extension');
   $script->addGetInput('%extension_prompt', 5, '#', 3);
   $script->addGotoIf('no_input_received', "^%input_digits == ''");
-  $script->addGotoIf('play_messages', "^%input_digits == '*' && %messaging_voip_store_count > 0");
+  $script->addGotoIf('play_messages', "^%input_digits == '*'");
   $script->addGosub('voipextension_play_extension', array('eid' => '%input_digits'));
   $script->addGoto('begin_menu');
 
@@ -45,13 +45,16 @@ function _voxbox_voip_welcome() {
   // Check for messages and add option if available
   $script->addLabel('messages');
   $script->addGosub('messaging_voip_script_store_count');
-  $script->addGotoIf('request_extension', '^%messaging_voip_store_count == 0');
-  $script->addSet('extension_prompt', 'You have messages. To hear messages press the star key. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
+  $script->addSet('extension_prompt', 'To hear new messages in your groups press star. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
   $script->addGoto('request_extension');
 
   // Go to messaging script
   $script->addLabel('play_messages');
-  $script->addGosub('messaging_voip_script_store_index');
+  $params = array(
+    'view_name' => 'og_voxbox_unread',
+    'display_id' => 'voipviews_1',
+  );
+  $script->addGosub('voipviews_read_view', $params);
   $script->addGoto('begin_menu');
 
   $script->addLabel('end');
