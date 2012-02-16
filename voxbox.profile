@@ -93,7 +93,13 @@ function voxbox_profile_install_voxbox($url) {
 
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
-  
+ 
+  // switch off og views that are overriden.
+  $status = variable_get('views_defaults', array());
+  $status['og'] = TRUE;
+  $status['og_unread'] = TRUE;
+  variable_set('views_defaults', $status);
+
   // needed to make autoload reindex
   module_invoke('autoload', 'flush_caches');
 }
