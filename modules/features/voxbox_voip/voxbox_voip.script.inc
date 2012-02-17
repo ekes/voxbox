@@ -45,7 +45,7 @@ function _voxbox_voip_welcome() {
   // Check for messages and add option if available
   $script->addLabel('messages');
   $script->addGosub('messaging_voip_script_store_count');
-  $script->addSet('extension_prompt', 'To hear new messages in your groups press star. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
+  $script->addSet('extension_prompt', 'To hear new announcements in the Vox Boxes you follow press the star star key. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
   $script->addGoto('request_extension');
 
   // Go to messaging script

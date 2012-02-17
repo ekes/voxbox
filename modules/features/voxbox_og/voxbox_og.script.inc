@@ -31,12 +31,12 @@ $script->addLog('checked it\'s %voxbox_og_member');
     $script->addGotoIf('not_subscribed', '^%voxbox_og_subscribed == 0');
     // )
     // {
-      $script->addSet('voxbox_og_option_4', 'To stop receieving alerts of announcements, press 4.');
+      $script->addSet('voxbox_og_option_4', 'To stop receiving alerts of announcements, press 4.');
       $script->addGoto('title');
     // }
     // {
       $script->addLabel('not_subscribed');
-      $script->addSet('voxbox_og_option_4', 'To receieve SMS alerts of announcements, press 4.');
+      $script->addSet('voxbox_og_option_4', 'To receive SMS alerts of announcements, press 4.');
       $script->addGoto('title');
     // }
   // }
@@ -49,7 +49,7 @@ $script->addLog('checked it\'s %voxbox_og_member');
   $script->addLabel('title');
   $script->addSay($node->title . '. ');
   $script->addLabel('intro');
-  $text = t('To leave a message press the star key. To hear announcements press 1. To make an announcement press 2. %voxbox_og_option_3 %voxbox_og_option_4 To return and select another group press the pound key.') . ' ';
+  $text = t('To hear announcements press 1. To record an announcement press 2. %voxbox_og_option_3 %voxbox_og_option_4 To leave a message to the Vox Box administrators, press the star key. To return and select another Vox Box press the pound key.') . ' ';
   $script->addGetInput($text, 1, '', 6);
   $script->addGotoIf('not_recognised', "^%input_digits == ''");
   $script->addGotoIf('start_voicemail', "^%input_digits == '*'");
@@ -241,6 +241,6 @@ function _voxbox_og_delete_subscription($gid) {
   og_delete_subscription($gid, $user->uid);
   // Need to reload the current user to reflect change.
   $user = user_load(array('uid' => $user->uid));
-  $script->addSay('You are no longer following this VoxBox');
+  $script->addSay('You are no longer following this Vox Box');
   return $script;
 }
