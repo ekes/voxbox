@@ -45,16 +45,12 @@ function _voxbox_voip_welcome() {
   // Check for messages and add option if available
   $script->addLabel('messages');
   $script->addGosub('messaging_voip_script_store_count');
-  $script->addSet('extension_prompt', 'To hear new announcements in the Vox Boxes you follow press the star star key. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
+  $script->addSet('extension_prompt', 'To hear your personal menu, vox boxes you follow and new announcements in them press the star key. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
   $script->addGoto('request_extension');
 
   // Go to messaging script
   $script->addLabel('play_messages');
-  $params = array(
-    'view_name' => 'og_voxbox_unread',
-    'display_id' => 'voipviews_1',
-  );
-  $script->addGosub('voipviews_read_view', $params);
+  $script->addGosub('voxbox_user_menu');
   $script->addGoto('begin_menu');
 
   $script->addLabel('end');
