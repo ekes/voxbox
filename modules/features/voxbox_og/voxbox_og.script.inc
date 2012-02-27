@@ -255,7 +255,8 @@ function _voxbox_og_record_sms_announcement_script() {
   // Log user in.
   $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number'));
   // Parse contents.
-  $script->addSet('request_result', '_voxbox_og_record_sms_announcement(%inbound_text_contents)');
+  $script->addSet('request_result', '^_voxbox_og_record_sms_announcement(%inbound_text_contents)');
+  $script->addLog('%request_result');
   // Send result.
   $script->addSendText('%request_result');
   $script->addHangup('reset');
@@ -266,6 +267,7 @@ function _voxbox_og_record_sms_announcement_script() {
  * Helper to parse _voxbox_og_record_sms_announcement_script().
  */
 function _voxbox_og_record_sms_announcement($text) {
+watchdog('DEBUG', $text);
   global $user;
 
   // The user should have been logged in by number.
@@ -280,7 +282,7 @@ function _voxbox_og_record_sms_announcement($text) {
   }
 
   // Check for Extension.
-  if (preg_match('/^([0-9]*)(\s)*(.*)?$/', $text, $matches)) {
+  if (! preg_match('/^([0-9]*)(\s)*(.*)?$/', $text, $matches)) {
     return t('Send announcements with the voxbox extension number at the beginning of the SMS.');
   }
   // Match [extension][whitespace][body of message].
