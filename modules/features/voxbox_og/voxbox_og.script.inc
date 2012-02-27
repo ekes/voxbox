@@ -244,3 +244,91 @@ function _voxbox_og_delete_subscription($gid) {
   $script->addSay('You are no longer following this Vox Box');
   return $script;
 }
+
+/**
+ * Incoming SMS to group announcement script.
+ *
+ * @see _voxbox_og_record_sms_announcement().
+ */
+function _voxbox_og_record_sms_announcement_script() {
+  $script = new VoipScript('voxbox_og_record_sms_announcement');
+  // Log user in.
+  $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number'));
+  // Parse contents.
+  $script->addSet('request_result', '_voxbox_og_record_sms_announcement(%inbound_text_contents)');
+  // Send result.
+  $script->addSendText('%request_result');
+  $script->addHangup('reset');
+  return $script;
+}
+
+/**
+ * Helper to parse _voxbox_og_record_sms_announcement_script().
+ */
+function _voxbox_og_record_sms_announcement($text) {
+  global $user;
+
+  // The user should have been logged in by number.
+  if (! $user->uid) {
+    return t('Unknown user telephone number.');
+  }
+
+  // Completely empty SMS.
+  $msg = trim($msg);
+  if (empty($msg)) {
+    return t('Empty request received');
+  }
+
+  // Check for Extension.
+  if (preg_match('/^([0-9]*)(\s)*(.*)?$/', $text, $matches)) {
+    return t('Send announcements with the voxbox extension number at the beginning of the SMS.');
+  }
+  // Match [extension][whitespace][body of message].
+  $eid = $matches[1];
+  $body = $matches[3];
+  // Check for text in body.
+  if (empty($body)) {
+    return t('Include text for announcement after voxbox extension number.');
+  }
+
+  // Load extension.
+  if (! $extension = voipextension_load($eid)) {
+    return t('Unknown voxbox number @eid', array('@eid' => $eid));
+  }
+  // Load node
+  if (! $extension['module'] == 'voipnode') {
+    return t('Extension @eid is not a voxbox.', array('@eid' => $eid));
+  }
+  $group = node_load($extension['module_id']);
+  // Check for voxbox type.
+  if (! $group->type == 'voxbox') {
+    return t('Extension @eid is not a voxbox.', array('@eid' => $eid));
+  }
+
+  // Access control.
+  // @todo to be upgraded with beta3.
+  if (! og_is_group_member($group->nid)) {
+    return t('You are not a member of voxbox @title', array('@title' => $group->title));
+  }
+  
+  // Construct, and save node.
+  $node = new stdClass();
+  $node->type = 'announcement';
+  $node->status = 1;
+  $node->title = $node->teaser = $node->body = $body;
+  $node->format = FILTER_HTML_STRIP;
+  $node->uid = $user->uid;
+  $node->name = $user->name;
+  $node->og_groups = array($group->nid => $group->nid);
+  node_save($node);
+  if ($node->nid) {
+    return t('Announcement saved to @title', array('@title' => $group->title));
+  }
+  else {
+    return t('Sorry there was an error saving your announcement to @title', array('@title' => $group->title));
+  }
+}
+
+
+
+
