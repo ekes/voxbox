@@ -1,3 +1,25 @@
 <?php
 
-// Drupal needs this blank file.
+/**
+ * @file
+ *   Hooks for VoIP user module.
+ */
+
+/**
+ * Implements hook_voipscript_get_script_names().
+ */
+function voxbox_user_voipscript_get_script_names() {
+  return array(
+    'voxbox_user_menu',
+  );
+}
+
+/**
+ * Implements hook_voipscript_load_script().
+ */
+function voxbox_user_voipscript_load_script($script_name, $params = NULL) {
+  if ($script_name == 'voxbox_user_menu') {
+    module_load_include('inc', 'voxbox_user', 'voxbox_user.script');
+    return _voxbox_user_menu();
+  }
+}
