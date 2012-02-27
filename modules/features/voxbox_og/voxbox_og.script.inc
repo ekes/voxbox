@@ -274,8 +274,8 @@ function _voxbox_og_record_sms_announcement($text) {
   }
 
   // Completely empty SMS.
-  $msg = trim($msg);
-  if (empty($msg)) {
+  $text = trim($text);
+  if (empty($text)) {
     return t('Empty request received');
   }
 
