@@ -12,7 +12,7 @@ function _voxbox_user_menu() {
   $script = new VoipScript('voxbox_User_menu');
 
   $script->addLabel('begin_menu');
-  $prompt = v('To hear new messages in all your groups press the star key. To hear a list of your groups, their extensions and if there are new messages dial zero followed by the pound key. To go to a group dial its extension followed by the pound key.');
+  $prompt = v('To check your voxbox announcements press the star key. To hear a list of vox boxes you follow, their extensions and if there are new messages dial zero followed by the pound key. To go to a vox box dial its extension followed by the pound key.');
   $script->addGetInput($prompt, 5, '#', 3);
   $script->addGotoIf('no_input_received', "^%input_digits == ''");
   $script->addGotoIf('groups_list', "^%input_digits == '0'");
