@@ -1,5 +1,7 @@
 <?php
 
+include_once('voxbox_user.features.inc');
+
 /**
  * @file
  *   Hooks for VoIP user module.
