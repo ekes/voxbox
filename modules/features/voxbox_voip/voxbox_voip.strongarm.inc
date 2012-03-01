@@ -24,7 +24,7 @@ function voxbox_voip_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'voipcall_inbound_text_script_name';
-  $strongarm->value = 'voipcall_default_inbound_text_script';
+  $strongarm->value = 'voxbox_og_record_sms_announcement';
   $export['voipcall_inbound_text_script_name'] = $strongarm;
 
   $strongarm = new stdClass;
