@@ -17,13 +17,13 @@
 function _voxbox_voip_welcome() {
   $script = new VoipScript('voxbox_welcome');
 
-  $script->addSay(t('Welcome to Vox Box. '));
+  $script->addSay(t('Welcome to Vox Box. Main menu.'));
   // Log users in if they already have an account connected with the caller
   // number.
   $script->addGosub('voipusernumber_autologin', array('number' => '%caller_number'));
 
   $script->addLabel('begin_menu');
-  $script->addSet('extension_prompt', variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
+  $script->addSet('extension_prompt', variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by the pound key.'));
   $script->addGotoIf('messages', '^%user_uid != 0');
 
   $script->addLabel('request_extension');
@@ -45,7 +45,7 @@ function _voxbox_voip_welcome() {
   // Check for messages and add option if available
   $script->addLabel('messages');
   $script->addGosub('messaging_voip_script_store_count');
-  $script->addSet('extension_prompt', 'To hear your personal menu, vox boxes you follow and new announcements in them press the star key. Or ' . variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by #.'));
+  $script->addSet('extension_prompt',variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by the pound key. To go to your personal area, dial the star key.'));
   $script->addGoto('request_extension');
 
   // Go to messaging script
