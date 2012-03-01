@@ -116,18 +116,12 @@ projects[voipnumber][subdir] = "contrib"
 projects[voipnode][type] = "module"
 projects[voipnode][download][type] = "git"
 projects[voipnode][download][url] = "git://git.drupal.org/project/voipnode.git"
-<<<<<<< HEAD
 projects[voipnode][download][branch] = "6.x-1.x"
-=======
->>>>>>> d.o becomes authority for voipnode and voipextension.
 projects[voipnode][subdir] = "contrib"
 projects[voipextension][type] = "module"
 projects[voipextension][download][type] = "git"
 projects[voipextension][download][url] = "git://git.drupal.org/project/voipextension.git"
-<<<<<<< HEAD
 projects[voipextension][download][branch] = "6.x-1.x"
-=======
->>>>>>> d.o becomes authority for voipnode and voipextension.
 projects[voipextension][subdir] = "contrib"
 projects[voicemail][type] = "module"
 projects[voicemail][download][type] = "git"
@@ -144,8 +138,12 @@ projects[voipusernumber][download][url] = "git://github.com/ekes/voipusernumber.
 projects[voipusernumber][subdir] = "contrib"
 
 ; Notifications
+; Messaging needs a token patch, testing before putting into d.o issue queue.
 projects[messaging][subdir] = "contrib"
-projects[messaging][version] = 2.4
+projects[messaging][download][type] = "git"
+projects[messaging][download][url] = "git://git.drupal.org/project/messaging"
+projects[messaging][download][branch] = "6.x-2.x"
+projects[messaging][patch][] = "http://void.media.mit.edu/redmine/attachments/3/58-1-messaging-clear_tokens.patch"
 projects[notifications][subdir] = "contrib"
 projects[notifications][version] = 2.3
 ; temporarily using git dev version of messaging_voip
