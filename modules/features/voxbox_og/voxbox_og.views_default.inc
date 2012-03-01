@@ -34,6 +34,14 @@ function voxbox_og_views_default_views() {
       ),
       'relationship' => 'none',
     ),
+    'created' => array(
+      'order' => 'DESC',
+      'granularity' => 'second',
+      'id' => 'created',
+      'table' => 'node',
+      'field' => 'created',
+      'relationship' => 'none',
+    ),
   ));
   $handler->override_option('arguments', array(
     'group_nid' => array(
@@ -1216,21 +1224,39 @@ function voxbox_og_views_default_views() {
     ),
   ));
   $handler->override_option('fields', array(
-    'type' => array(
-      'id' => 'type',
+    'created' => array(
+      'label' => 'Date',
+      'alter' => array(
+        'alter_text' => 0,
+        'text' => '',
+        'make_link' => 0,
+        'path' => '',
+        'absolute' => 0,
+        'link_class' => '',
+        'alt' => '',
+        'rel' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'help' => '',
+        'trim' => 0,
+        'max_length' => '',
+        'word_boundary' => 1,
+        'ellipsis' => 1,
+        'html' => 0,
+        'strip_tags' => 0,
+      ),
+      'empty' => '',
+      'hide_empty' => 0,
+      'empty_zero' => 0,
+      'hide_alter_empty' => 1,
+      'date_format' => 'medium',
+      'custom_date_format' => '',
+      'exclude' => 0,
+      'id' => 'created',
       'table' => 'node',
-      'field' => 'type',
-      'label' => 'Type',
+      'field' => 'created',
       'relationship' => 'none',
-      'link_to_node' => 1,
-    ),
-    'title' => array(
-      'id' => 'title',
-      'table' => 'node',
-      'field' => 'title',
-      'label' => 'Title',
-      'relationship' => 'none',
-      'link_to_node' => 1,
     ),
     'name' => array(
       'id' => 'name',
@@ -1240,6 +1266,14 @@ function voxbox_og_views_default_views() {
       'link_to_user' => 1,
       'relationship' => 'none',
     ),
+    'title' => array(
+      'id' => 'title',
+      'table' => 'node',
+      'field' => 'title',
+      'label' => 'Title',
+      'relationship' => 'none',
+      'link_to_node' => 1,
+    ),
     'group_nid' => array(
       'id' => 'group_nid',
       'table' => 'og_ancestry',
@@ -1248,6 +1282,16 @@ function voxbox_og_views_default_views() {
       'type' => 'separator',
       'separator' => ', ',
       'empty' => '',
+      'relationship' => 'none',
+    ),
+  ));
+  $handler->override_option('sorts', array(
+    'created' => array(
+      'order' => 'DESC',
+      'granularity' => 'second',
+      'id' => 'created',
+      'table' => 'node',
+      'field' => 'created',
       'relationship' => 'none',
     ),
   ));
@@ -1313,7 +1357,7 @@ function voxbox_og_views_default_views() {
   $handler->override_option('cache', array(
     'type' => 'none',
   ));
-  $handler->override_option('title', 'Unread posts in my VoxBoxes');
+  $handler->override_option('title', 'New Announcements');
   $handler->override_option('empty', 'There are no new posts in your VoxBoxes.');
   $handler->override_option('empty_format', '1');
   $handler->override_option('items_per_page', 25);
@@ -1600,11 +1644,16 @@ function voxbox_og_views_default_views() {
         'button' => 'Use default',
       ),
     ),
+    'ivr_goto_begin' => array(
+      'id' => 'ivr_goto_begin',
+      'table' => 'voipviews',
+      'field' => 'ivr_goto_begin',
+    ),
     'created' => array(
       'label' => '',
       'alter' => array(
         'alter_text' => 1,
-        'text' => 'Posted on [created] by [name]. [field_voipnode_adesc_fid] [body].',
+        'text' => 'Posted on [created] by [name].',
         'make_link' => 0,
         'path' => '',
         'absolute' => 0,
@@ -1705,6 +1754,52 @@ function voxbox_og_views_default_views() {
       ),
       'relationship' => 'none',
     ),
+    'gosub_1' => array(
+      'gosub_script' => 'voipviews_node_untag_new',
+      'gosub_params' => '{ "nid" : [nid] }',
+      'exclude' => '',
+      'id' => 'gosub_1',
+      'table' => 'voipviews',
+      'field' => 'gosub',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
+    'ivr_next_row_1' => array(
+      'label' => 'Message saved.',
+      'alter' => array(
+        'alter_text' => FALSE,
+        'text' => '',
+        'make_link' => FALSE,
+        'path' => '',
+        'absolute' => '',
+        'alt' => '',
+        'rel' => '',
+        'link_class' => '',
+        'prefix' => '',
+        'suffix' => '',
+        'target' => '',
+        'trim' => FALSE,
+        'max_length' => '',
+        'word_boundary' => TRUE,
+        'ellipsis' => TRUE,
+        'strip_tags' => TRUE,
+        'html' => FALSE,
+      ),
+      'empty' => '',
+      'hide_empty' => NULL,
+      'empty_zero' => NULL,
+      'hide_alter_empty' => 0,
+      'exclude' => 0,
+      'id' => 'ivr_next_row_1',
+      'table' => 'voipviews',
+      'field' => 'ivr_next_row',
+      'override' => array(
+        'button' => 'Use default',
+      ),
+      'relationship' => 'none',
+    ),
     'ivr_return' => array(
       'label' => '',
       'alter' => array(
@@ -1756,24 +1851,28 @@ function voxbox_og_views_default_views() {
     'ivr_options' => array(
       'body' => '',
       'gosub' => '',
-      'created' => '1',
-      'ivr_goto_menu' => '1',
-      'ivr_next_row' => '2',
+      'ivr_goto_begin' => '1',
+      'created' => '2',
+      'ivr_goto_menu' => '2',
+      'ivr_next_row' => '3',
+      'gosub_1' => '4',
+      'ivr_next_row_1' => '4',
       'ivr_return' => '#',
+      'ivr_goto_menu_1' => '4',
     ),
     'ivr_prompt' => array(
       '\\0' => '',
-      '\\1' => 'To hear more details press 1.',
-      '\\2' => 'To go to the next announcement press 2.',
-      '\\3' => '',
-      '\\4' => '',
+      '\\1' => 'To repeat the announcement press 1.',
+      '\\2' => 'To listen to the announcement details press 2.',
+      '\\3' => 'To go to the next announcement press 3.',
+      '\\4' => 'To save this announcement press 4.',
       '\\5' => '',
       '\\6' => '',
       '\\7' => '',
       '\\8' => '',
       '\\9' => '',
       '\\*' => '',
-      '\\#' => 'To go back to the voxbox menu, dial the pound key.',
+      '\\#' => 'To go back to the Vox Box menu, dial the pound key.',
     ),
     'ivr_notfirst' => array(
       '\\0' => 0,
@@ -1792,8 +1891,8 @@ function voxbox_og_views_default_views() {
     'ivr_notlast' => array(
       '\\0' => 0,
       '\\1' => 0,
-      '\\2' => 1,
-      '\\3' => 0,
+      '\\2' => 0,
+      '\\3' => 1,
       '\\4' => 0,
       '\\5' => 0,
       '\\6' => 0,
