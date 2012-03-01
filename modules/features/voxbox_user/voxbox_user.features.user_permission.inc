@@ -428,7 +428,8 @@ function voxbox_user_user_default_permissions() {
   $permissions['make outbound calls'] = array(
     'name' => 'make outbound calls',
     'roles' => array(
-      '0' => 'site admin',
+      '0' => 'authenticated user',
+      '1' => 'site admin',
     ),
   );
 
