@@ -98,6 +98,7 @@ function voxbox_profile_install_voxbox($url) {
   $status = variable_get('views_defaults', array());
   $status['og'] = TRUE;
   $status['og_unread'] = TRUE;
+  $status['og_my'] = TRUE;
   variable_set('views_defaults', $status);
 
   // needed to make autoload reindex
