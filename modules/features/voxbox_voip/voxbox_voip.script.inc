@@ -29,7 +29,7 @@ function _voxbox_voip_welcome() {
   $script->addLabel('request_extension');
   $script->addGetInput('%extension_prompt', 5, '#', 3);
   $script->addGotoIf('no_input_received', "^%input_digits == ''");
-  $script->addGotoIf('play_messages', "^%input_digits == '*'");
+  $script->addGotoIf('play_messages', "^%input_digits == '*' && %user_uid !=0");
   $script->addGosub('voipextension_play_extension', array('eid' => '%input_digits'));
   $script->addGoto('begin_menu');
 
@@ -45,7 +45,7 @@ function _voxbox_voip_welcome() {
   // Check for messages and add option if available
   $script->addLabel('messages');
   $script->addGosub('messaging_voip_script_store_count');
-  $script->addSet('extension_prompt',variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by the pound key. To go to your personal area, dial the star key.'));
+  $script->addSet('extension_prompt',variable_get('voipextension_prompt_msg', 'Please enter the desired Vox Box number, followed by the pound key.') . ' To go to your personal area, dial the star key.');
   $script->addGoto('request_extension');
 
   // Go to messaging script
