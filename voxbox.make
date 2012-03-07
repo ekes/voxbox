@@ -162,6 +162,8 @@ projects[rubik][version] = 3.0-beta2
 projects[rubik][type] = "theme"
 projects[tao][version] = 3.2
 projects[tao][type] = "theme"
+projects[zen][version] = 6.x-2.1
+projects[zen][type] = "theme"
 
 ; Libraries
 ; ---------
