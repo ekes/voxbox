@@ -1579,7 +1579,7 @@ function voxbox_og_views_default_views() {
         'word_boundary' => 1,
         'ellipsis' => 1,
         'html' => 0,
-        'strip_tags' => 0,
+        'strip_tags' => 1,
       ),
       'empty' => '',
       'hide_empty' => 0,
