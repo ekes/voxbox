@@ -104,7 +104,20 @@ function voxbox_profile_install_voxbox($url) {
   // Default variables that don't want to strongarmed.
   variable_set('site_mission', st('VoxBox provides voice-based bulletin boards for grassroots organizations such as PTAs, churches, local sports teams and informal groups.'));
   variable_set('site_frontpage', 'og');
-  
+  variable_set('locale_custom_strings_en', array(
+    'A brief description for the group details block and the group directory.' => 'A brief description for the VoxBox details block and the VoxBox directory.',
+    'Should this group appear on the <a href="@url">list of groups page</a> (requires OG Views module)? Disabled if the group is set to <em>private group</em>.' => 'Should this group appear on the <a href="@url">list of Voxboxes page</a>? Disabled if the Voxbox is set to <em>private Voxbox</em>.',
+    'How should membership requests be handled in this group? When you select <em>closed</em>, users will not be able to join <strong>or</strong> leave.' => 'How should membership requests be handled in this VoxBox? When you select <em>closed</em>, users will not be able to join <strong>or</strong> leave.',
+    'You may not leave this group because you are its owner. A site administrator can assign ownership to another user and then you may leave.' => 'You may not leave this VoxBox because you are its owner. A site administrator can assign ownership to another user and then you may leave.',
+    'List in groups directory' => 'List in VoxBox directory',
+    'Group' => 'VoxBox',
+    'Groups' => 'VoxBoxes',
+    'My groups' => 'My VoxBoxes',
+    'Group activity' => 'VoxBox activity',
+    // Next two are in og_views:
+    'Unread posts in my groups' => 'Unread posts in my VoxBoxes',
+    'There are no new posts in your groups.' => 'There are no new posts in your VoxBoxes.',
+  ));
 
   // needed to make autoload reindex
   module_invoke('autoload', 'flush_caches');
