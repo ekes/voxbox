@@ -90,6 +90,12 @@ div#site-name /* The name of the website */ {
 }
 
 #site-slogan /* The slogan (or tagline) of a website */ {
+  font-style: italic;
+  margin-bottom: 1em;
+  background-color: #069;
+  border-radius: 4px;
+  padding: 19px;
+  color: #fff;
 }
 
 .region-header /* Wrapper for any blocks placed in the header region */ {
