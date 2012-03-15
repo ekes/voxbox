@@ -135,8 +135,8 @@
     <div id="main-wrapper"><div id="main" class="row">
       
       <div id="content" class="span8">
-        <?php if ($mission): ?>
-          <div id="mission"><?php print $mission; ?></div>
+        <?php if ($is_front): ?>
+          <h2 id="site-slogan"><?php print $site_slogan; ?></h2>
         <?php endif; ?>
     
         <?php print $highlight; ?>
