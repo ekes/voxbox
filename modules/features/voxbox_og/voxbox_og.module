@@ -111,3 +111,13 @@ function _voxbox_og_notifications_subscribed($uid, $gid) {
   // type, NULL for any)
   return count(notifications_get_subscriptions(array('type' => 'grouptype', 'uid' => $uid), array('group' => $gid, 'type' => NULL)));
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function voxbox_og_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'voxbox_node_form') {
+    // All boxes are presently open membership.
+    $form['og_selective']['#type'] = 'hidden';
+  }
+}
