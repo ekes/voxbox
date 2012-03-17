@@ -92,11 +92,12 @@ projects[filefield_paths][subdir] = "contrib"
 projects[audiofield][version] = 1.0
 projects[audiofield][type] = "module"
 projects[audiofield][subdir] = "contrib"
-projects[audiorecorderfield][version] = 1.0-beta4
+; Use dev for https://drupal.org/node/1442402 load API even without hook_init().
 projects[audiorecorderfield][type] = "module"
+projects[audiorecorderfield][download][type] = "git"
+projects[audiorecorderfield][download][url] = "git://git.drupal.org/project/audiorecorderfield.git"
+projects[audiorecorderfield][download][branch] = "6.x-1.x"
 projects[audiorecorderfield][subdir] = "contrib"
-; https://drupal.org/node/1442402 load API even without hook_init().
-projects[audiorecorderfield][patch][] = "http://drupal.org/files/1442402-01-audiorecorderfield-hook-init.patch"
 ;
 projects[wysiwyg][version] = 2.4
 projects[wysiwyg][type] = "module"
@@ -164,7 +165,7 @@ projects[rubik][version] = 3.0-beta2
 projects[rubik][type] = "theme"
 projects[tao][version] = 3.2
 projects[tao][type] = "theme"
-projects[zen][version] = 6.x-2.1
+projects[zen][version] = 2.1
 projects[zen][type] = "theme"
 
 ; Libraries
