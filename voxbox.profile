@@ -65,7 +65,7 @@ function voxbox_profile_tasks(&$task, $url) {
  */
 function voxbox_profile_default_features() {
   return array(
-    'voxbox_og', 'voxbox_announcements', 'voxbox_voip', 'voxbox_user',
+    'voxbox_og', 'voxbox_announcements', 'voxbox_voip', 'voxbox_user', 'voxbox_notifications',
   );
 }
 
