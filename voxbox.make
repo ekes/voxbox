@@ -159,8 +159,6 @@ projects[job_scheduler][subdir] = "contrib"
 
 ; Themes
 ; --------
-projects[omega][version] = 1.0
-projects[omega][type] = "theme"
 projects[rubik][version] = 3.0-beta2
 projects[rubik][type] = "theme"
 projects[tao][version] = 3.2
