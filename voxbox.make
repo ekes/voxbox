@@ -92,7 +92,7 @@ projects[filefield_paths][subdir] = "contrib"
 projects[audiofield][version] = 1.0
 projects[audiofield][type] = "module"
 projects[audiofield][subdir] = "contrib"
-projects[audiorecorderfield][version] = 1.0-beta1
+projects[audiorecorderfield][version] = 1.0-beta4
 projects[audiorecorderfield][type] = "module"
 projects[audiorecorderfield][subdir] = "contrib"
 ; https://drupal.org/node/1442402 load API even without hook_init().
