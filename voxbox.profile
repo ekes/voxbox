@@ -119,6 +119,18 @@ function voxbox_profile_install_voxbox($url) {
     'There are no new posts in your groups.' => 'There are no new posts in your VoxBoxes.',
   ));
 
+  // strongarm doesn't seem to reset all variables so
+  // we'll force it manually just in case.
+  // Code from strongarm.drush.inc
+  $vars = strongarm_vars_load(TRUE, TRUE);
+  foreach ($vars as $name => $var) {
+    if ($force || isset($var->in_code_only)) {
+      if (!isset($conf[$name]) || $var->value != $conf[$name]) {
+        variable_set($name, $var->value);
+      }
+    }
+  }
+
   // needed to make autoload reindex
   module_invoke('autoload', 'flush_caches');
 }
