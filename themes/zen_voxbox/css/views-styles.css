@@ -1,0 +1,39 @@
+/**
+ * @file
+ * Views Styling
+ */
+
+/** table of voxboxes **/
+
+th.views-field {
+    padding: 0.5em;
+    padding-right: 1.0em;
+}
+
+td.views-field {
+    padding: 0.5em 1.0em 0.5em 0.5em;
+}
+
+thead.tableHeader-processed {
+    background-color: #cccccc;
+    border-bottom: 1px solid #999999;
+}
+
+tr.even {
+    background-color: rgb(245, 245, 245);
+    border-bottom: none;
+}
+
+tr.odd {
+    background-color: #ffffff;    
+    border-bottom: none;
+}
+
+/** list of announcements within a voxbox **/
+
+.view-og-ghp-ron-voip .views-row {
+}
+.view-og-ghp-ron-voip .views-row p {
+}
+.view-og-ghp-ron-voip .views-row .field-field-voipnode-adesc {
+}

@@ -12,6 +12,7 @@ function _voxbox_user_menu() {
   $script = new VoipScript('voxbox_User_menu');
 
   $script->addLabel('begin_menu');
+  $script->addSay(v('Personal area menu'));
   $prompt = v('To check your announcements, press 1. To hear the list of voxboxes that you are subscribed to, press 2. To go back to the main menu, press the pound key.');
   $script->addGetInput($prompt, 1, '*', 3);
   $script->addGotoIf('no_input_received', "^%input_digits == ''");
@@ -22,7 +23,7 @@ function _voxbox_user_menu() {
 
   // No input
   $script->addLabel('no_input_received');
-  $script->addSay(variable_get('voipextension_noinput_msg', t('No input received. Please try again.')));
+  $script->addSay(variable_get('voipextension_noinput_msg', v('No input received. Please try again.')));
   $script->addGoto('begin_menu');
 
 

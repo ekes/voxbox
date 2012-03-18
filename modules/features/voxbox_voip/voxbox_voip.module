@@ -11,6 +11,8 @@ function voxbox_voip_block($op = 'list', $delta = 0, $edit = array()) {
       $blocks['phone_number'] = array(
         'info' => t('Default Voxbox phone number block'),
         'cache' => BLOCK_NO_CACHE,
+        'region' => 'header',
+        'status' => 1,
       );
       return $blocks;
     case 'view': 

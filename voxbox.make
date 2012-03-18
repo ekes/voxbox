@@ -36,16 +36,16 @@ projects[admin_menu][subdir] = "contrib"
 projects[ctools][version] = 1.8
 projects[ctools][type] = "module"
 projects[ctools][subdir] = "contrib"
-projects[features][version] = 1.1
+projects[features][version] = 1.2
 projects[features][type] = "module"
 projects[features][subdir] = "contrib"
-projects[strongarm][version] = 2.0
+projects[strongarm][version] = 2.1
 projects[strongarm][type] = "module"
 projects[strongarm][subdir] = "contrib"
 projects[autoload][version] = 2.1
 projects[autoload][type] = "module"
 projects[autoload][subdir] = "contrib"
-projects[install_profile_api][version] = 2.1
+projects[install_profile_api][version] = 2.2
 projects[install_profile_api][type] = "module"
 projects[install_profile_api][subdir] = "contrib"
 ; Token dev version needed to avoid warnings related to
@@ -65,7 +65,7 @@ projects[auto_nodetitle][subdir] = "contrib"
 projects[views][version] = 2.16
 projects[views][type] = "module"
 projects[views][subdir] = "contrib"
-projects[og][version] = 2.1
+projects[og][version] = 2.2
 projects[og][type] = "module"
 projects[og][subdir] = "contrib"
 ; support contrib
@@ -92,11 +92,12 @@ projects[filefield_paths][subdir] = "contrib"
 projects[audiofield][version] = 1.0
 projects[audiofield][type] = "module"
 projects[audiofield][subdir] = "contrib"
-projects[audiorecorderfield][version] = 1.0-beta1
+; Use dev for https://drupal.org/node/1442402 load API even without hook_init().
 projects[audiorecorderfield][type] = "module"
+projects[audiorecorderfield][download][type] = "git"
+projects[audiorecorderfield][download][url] = "git://git.drupal.org/project/audiorecorderfield.git"
+projects[audiorecorderfield][download][branch] = "6.x-1.x"
 projects[audiorecorderfield][subdir] = "contrib"
-; https://drupal.org/node/1442402 load API even without hook_init().
-projects[audiorecorderfield][patch][] = "http://drupal.org/files/1442402-01-audiorecorderfield-hook-init.patch"
 ;
 projects[wysiwyg][version] = 2.4
 projects[wysiwyg][type] = "module"
@@ -124,16 +125,18 @@ projects[voipextension][download][branch] = "6.x-1.x"
 projects[voipextension][subdir] = "contrib"
 projects[voicemail][type] = "module"
 projects[voicemail][download][type] = "git"
-projects[voicemail][download][url] = "git://github.com/ekes/voicemail.git"
+projects[voicemail][download][url] = "git://git.drupal.org/project/voicemail.git"
+projects[voicemail][download][branch] = "6.x-1.x"
 projects[voicemail][subdir] = "contrib"
 projects[voipviews][type] = "module"
 projects[voipviews][download][type] = "git"
-projects[voipviews][download][url] = "git://github.com/ekes/voipviews.git"
+projects[voipviews][download][url] = "git://git.drupal.org/project/voipviews.git"
 projects[voipviews][download][branch] = "6.x-2.x"
 projects[voipviews][subdir] = "contrib"
 projects[voipusernumber][type] = "module"
 projects[voipusernumber][download][type] = "git"
-projects[voipusernumber][download][url] = "git://github.com/ekes/voipusernumber.git"
+projects[voipusernumber][download][url] = "git://git.drupal.org/project/voipusernumber.git"
+projects[voipusernumber][download][branch] = "6.x-1.x"
 projects[voipusernumber][subdir] = "contrib"
 
 ; Notifications
@@ -156,12 +159,12 @@ projects[job_scheduler][subdir] = "contrib"
 
 ; Themes
 ; --------
-projects[omega][version] = 1.0
-projects[omega][type] = "theme"
 projects[rubik][version] = 3.0-beta2
 projects[rubik][type] = "theme"
 projects[tao][version] = 3.2
 projects[tao][type] = "theme"
+projects[zen][version] = 2.1
+projects[zen][type] = "theme"
 
 ; Libraries
 ; ---------

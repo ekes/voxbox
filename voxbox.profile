@@ -65,7 +65,7 @@ function voxbox_profile_tasks(&$task, $url) {
  */
 function voxbox_profile_default_features() {
   return array(
-    'voxbox_og', 'voxbox_announcements', 'voxbox_voip', 'voxbox_user',
+    'voxbox_og', 'voxbox_announcements', 'voxbox_voip', 'voxbox_user', 'voxbox_notifications',
   );
 }
 
@@ -80,16 +80,16 @@ function voxbox_profile_install_voxbox($url) {
   // themes
   install_enable_theme('tao');
   install_admin_theme('rubik');
-  install_enable_theme('omega');
-  install_enable_theme('omegavb');
-  install_default_theme('omegavb');
+  install_enable_theme('zen');
+  install_enable_theme('zen_voxbox');
+  install_default_theme('zen_voxbox');
 
   // Put the navigation block in the sidebar because the sidebar looks awesome.
   install_init_blocks();
   // add og group admin block
-  install_set_block('og', 0, 'omegavb', 'sidebar_first', -10);
+  install_set_block('og', 0, 'zen_voxbox', 'sidebar', -10);
   // default number block
-  install_set_block('voxbox_voip', 'phone_number', 'omegavb', 'header_last', 0);
+  install_set_block('voxbox_voip', 'phone_number', 'zen_voxbox', 'header', 0);
 
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
@@ -100,6 +100,36 @@ function voxbox_profile_install_voxbox($url) {
   $status['og_unread'] = TRUE;
   $status['og_my'] = TRUE;
   variable_set('views_defaults', $status);
+
+  // Default variables that don't want to strongarmed.
+  variable_set('site_mission', st('VoxBox provides voice-based bulletin boards for grassroots organizations such as PTAs, churches, local sports teams and informal groups.'));
+  variable_set('site_frontpage', 'og');
+  variable_set('locale_custom_strings_en', array(
+    'A brief description for the group details block and the group directory.' => 'A brief description for the VoxBox details block and the VoxBox directory.',
+    'Should this group appear on the <a href="@url">list of groups page</a> (requires OG Views module)? Disabled if the group is set to <em>private group</em>.' => 'Should this group appear on the <a href="@url">list of Voxboxes page</a>? Disabled if the Voxbox is set to <em>private Voxbox</em>.',
+    'How should membership requests be handled in this group? When you select <em>closed</em>, users will not be able to join <strong>or</strong> leave.' => 'How should membership requests be handled in this VoxBox? When you select <em>closed</em>, users will not be able to join <strong>or</strong> leave.',
+    'You may not leave this group because you are its owner. A site administrator can assign ownership to another user and then you may leave.' => 'You may not leave this VoxBox because you are its owner. A site administrator can assign ownership to another user and then you may leave.',
+    'List in groups directory' => 'List in VoxBox directory',
+    'Group' => 'VoxBox',
+    'Groups' => 'VoxBoxes',
+    'My groups' => 'My VoxBoxes',
+    'Group activity' => 'VoxBox activity',
+    // Next two are in og_views:
+    'Unread posts in my groups' => 'Unread posts in my VoxBoxes',
+    'There are no new posts in your groups.' => 'There are no new posts in your VoxBoxes.',
+  ));
+
+  // strongarm doesn't seem to reset all variables so
+  // we'll force it manually just in case.
+  // Code from strongarm.drush.inc
+  $vars = strongarm_vars_load(TRUE, TRUE);
+  foreach ($vars as $name => $var) {
+    if ($force || isset($var->in_code_only)) {
+      if (!isset($conf[$name]) || $var->value != $conf[$name]) {
+        variable_set($name, $var->value);
+      }
+    }
+  }
 
   // needed to make autoload reindex
   module_invoke('autoload', 'flush_caches');

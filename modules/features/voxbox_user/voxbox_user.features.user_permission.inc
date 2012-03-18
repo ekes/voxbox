@@ -43,7 +43,7 @@ function voxbox_user_user_default_permissions() {
   $permissions['Edit own VoIP user number'] = array(
     'name' => 'Edit own VoIP user number',
     'roles' => array(
-      '0' => 'authenticated user',
+      '0' => 'site admin',
     ),
   );
 

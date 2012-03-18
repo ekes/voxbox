@@ -9,6 +9,13 @@ function voxbox_og_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'audiofield_audioplayer';
+  $strongarm->value = 'wpaudioplayer';
+  $export['audiofield_audioplayer'] = $strongarm;
+
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'audiofield_audioplayer_wav';
   $strongarm->value = 'nanogong';
   $export['audiofield_audioplayer_wav'] = $strongarm;
