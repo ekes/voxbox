@@ -9,33 +9,6 @@ function voxbox_voip_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'conditional_styles_zen_voxbox';
-  $strongarm->value = '<!--[if IE]>
-<link type="text/css" rel="stylesheet" media="all" href="/profiles/voxbox/themes/zen_voxbox/css/ie.css?v" />
-<![endif]-->
-<!--[if lte IE 6]>
-<link type="text/css" rel="stylesheet" media="all" href="/profiles/voxbox/themes/zen_voxbox/css/ie6.css?v" />
-<![endif]-->
-';
-  $export['conditional_styles_zen_voxbox'] = $strongarm;
-
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'conditional_styles_zen_voxbox_rtl';
-  $strongarm->value = '<!--[if IE]>
-<link type="text/css" rel="stylesheet" media="all" href="/profiles/voxbox/themes/zen_voxbox/css/ie.css?v" />
-<![endif]-->
-<!--[if lte IE 6]>
-<link type="text/css" rel="stylesheet" media="all" href="/profiles/voxbox/themes/zen_voxbox/css/ie6.css?v" />
-<link type="text/css" rel="stylesheet" media="all" href="/profiles/voxbox/themes/zen_voxbox/css/ie6-rtl.css?v" />
-<![endif]-->
-';
-  $export['conditional_styles_zen_voxbox_rtl'] = $strongarm;
-
-  $strongarm = new stdClass;
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'theme_zen_voxbox_settings';
   $strongarm->value = array(
     'zen_block_editing' => 1,
