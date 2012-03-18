@@ -48,8 +48,12 @@ projects[autoload][subdir] = "contrib"
 projects[install_profile_api][version] = 2.1
 projects[install_profile_api][type] = "module"
 projects[install_profile_api][subdir] = "contrib"
-projects[token][version] = 1.18
+; Token dev version needed to avoid warnings related to
+; https://drupal.org/node/1329024
 projects[token][type] = "module"
+projects[token][download][type] = "git"
+projects[token][download][url] = "git://git.drupal.org/project/token.git"
+projects[token][download][branch] = "6.x-1.x"
 projects[token][subdir] = "contrib"
 projects[transliteration][version] = 3.0
 projects[transliteration][type] = "module"
@@ -91,6 +95,8 @@ projects[audiofield][subdir] = "contrib"
 projects[audiorecorderfield][version] = 1.0-beta1
 projects[audiorecorderfield][type] = "module"
 projects[audiorecorderfield][subdir] = "contrib"
+; https://drupal.org/node/1442402 load API even without hook_init().
+projects[audiorecorderfield][patch][] = "http://drupal.org/files/1442402-01-audiorecorderfield-hook-init.patch"
 ;
 projects[wysiwyg][version] = 2.4
 projects[wysiwyg][type] = "module"
@@ -130,6 +136,24 @@ projects[voipusernumber][download][type] = "git"
 projects[voipusernumber][download][url] = "git://github.com/ekes/voipusernumber.git"
 projects[voipusernumber][subdir] = "contrib"
 
+; Notifications
+; Messaging needs a token patch, testing before putting into d.o issue queue.
+projects[messaging][subdir] = "contrib"
+projects[messaging][download][type] = "git"
+projects[messaging][download][url] = "git://git.drupal.org/project/messaging"
+projects[messaging][download][branch] = "6.x-2.x"
+projects[messaging][patch][] = "http://void.media.mit.edu/redmine/attachments/download/3/58-1-messaging-clear_tokens.patch"
+projects[notifications][subdir] = "contrib"
+projects[notifications][version] = 2.3
+; temporarily using git dev version of messaging_voip
+projects[messaging_voip][type] = "module"
+projects[messaging_voip][download][type] = "git"
+projects[messaging_voip][download][url] = "git://git.iskra.net/drupal/contrib/messaging_voip"
+projects[messaging_voip][download][branch] = "6.x-1.x-sms_and_pull"
+projects[messaging_voip][subdir] = "contrib"
+; presently a dependency for messaging_voip
+projects[job_scheduler][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[omega][version] = 1.0
@@ -141,9 +165,17 @@ projects[tao][type] = "theme"
 
 ; Libraries
 ; ---------
+; wysiwyg
 libraries[ckeditor][type] = "libraries"
 libraries[ckeditor][download][type] = "file"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
+; audiofield
+libraries[audio_player][type] = "libraries"
+libraries[audio_player][download][type] = "file"
+libraries[audio_player][download][url] = "http://wpaudioplayer.com/wp-content/downloads/audio-player-standalone.zip"
+libraries[audio_player][destination] = "libraries/audio_players"
+libraries[audio_player][directory_name] = "audio-player"
+; audiorecorderfield
 ; http://github.com/jwagener/recorder.js
 ;libraries[audiorecorderfield][download][type] = "get"
 ;libraries[audiorecorderfield][download][url] = "http://github.com/jwagener/recorder.js/raw/881498c1b8dbb8b10bc480be6fbad8b723fb1895/recorder.swf"

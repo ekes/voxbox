@@ -6,19 +6,32 @@ include_once('voxbox_og.features.inc');
  * Implementation of hook_voipscript_load_script().
  */
 function voxbox_og_voipscript_load_script($script_name, $params = NULL) {
-  if ($script_name == 'voxbox_og_node_script') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    $node = node_load($params['nid']);
-    return _voxbox_og_node_script($node);
+  if (! in_array($script_name, voxbox_og_voipscript_get_script_names())) {
+    return;
   }
-  elseif ($script_name == 'voxbox_og_record_announcement') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    $node = node_load($params['nid']);
-    return _voxbox_og_record_announcement($node);
-  }
-  elseif ($script_name == 'voxbox_og_save_announcement') {
-    module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
-    return _voxbox_og_save_announcement($params['nid'], $params['fid']);
+
+  module_load_include('inc', 'voxbox_og', 'voxbox_og.script');
+  switch ($script_name) {
+    case 'voxbox_og_node_script':
+      $node = node_load($params['nid']);
+      return _voxbox_og_node_script($node);
+    case 'voxbox_og_record_announcement':
+      $node = node_load($params['nid']);
+      return _voxbox_og_record_announcement($node);
+    case 'voxbox_og_save_announcement':
+      return _voxbox_og_save_announcement($params['nid'], $params['fid']);
+    case 'voxbox_og_notifications_status':
+      return _voxbox_og_notifications_status();
+    case 'voxbox_og_notifications_subscribe':
+      return _voxbox_og_notifications_subscribe($params['gid']);
+    case 'voxbox_og_notifications_unsubscribe':
+      return _voxbox_og_notifications_unsubscribe($params['gid']);
+    case 'voxbox_og_subscribe_user':
+      return _voxbox_og_subscribe_user($params['gid']);
+    case 'voxbox_og_delete_subscription':
+      return _voxbox_og_delete_subscription($params['gid']);
+    case 'voxbox_og_record_sms_announcement':
+      return _voxbox_og_record_sms_announcement_script();
   }
 }
 
@@ -30,5 +43,71 @@ function voxbox_og_voipscript_get_script_names() {
     'voxbox_og_node_script',
     'voxbox_og_record_announcement',
     'voxbox_og_save_announcement',
+    'voxbox_og_notifications_Status',
+    // Helper scripts, forces correct update of user variable:-
+    'voxbox_og_notifications_subscribe',
+    'voxbox_og_notifications_unsubscribe',
+    'voxbox_og_subscribe_user',
+    'voxbox_og_delete_subscription',
+    'voxbox_og_record_sms_announcement',
   );
-} 
+}
+
+/**
+ * Implements hook_token_list() for additional og specific tokens.
+ */
+function voxbox_og_token_list($type = 'all') {
+  if ($type == 'node' || $type == 'all') {
+    $tokens['node']['og-extension'] = t('The extension of the top group');
+    return $tokens;
+  }
+}
+
+/**
+ * Implements hook_token_values() for additional og specific tokens.
+ */
+function voxbox_og_token_values($type, $object = NULL) {
+  $values = array();
+  switch ($type) {
+    case 'node':
+      // Set some defaults.
+      $values['ogextension'] = '';
+
+      if (!empty($object->og_groups) && is_array($object->og_groups)) {
+        $gids = array_filter($object->og_groups);
+        foreach ($gids as $gid) {
+          $extension = voipextension_load_by_module_id('voipnode', $gid);
+          $values['og-extension'] = $extension['eid'];
+          break;
+        }
+        return $values;
+      }
+      break;
+  }
+  return $values;
+}
+
+/**
+ * Helper function: test if user has any notifications for group.
+ *
+ * @param int $uid
+ *   User ID.
+ * @param int $gid
+ *   Group ID.
+ * 
+ * @return int
+ *   Number of subscriptions to the group.
+ */
+function _voxbox_og_notifications_subscribed($uid, $gid) {
+  // Anonymous user, not logged in, no subscriptions.
+  if (! $uid) {
+    return 0;
+  }
+
+  // Parameters for notifications_get_subscriptions here are:-
+  // $parmas = array('type' => 'node/taxonomy or in this case grouptype from 
+  // og_notifications', 'uid' => 'user id'),
+  // $conditions of fields = array('group' => 'group id', 'type' => 'content
+  // type, NULL for any)
+  return count(notifications_get_subscriptions(array('type' => 'grouptype', 'uid' => $uid), array('group' => $gid, 'type' => NULL)));
+}

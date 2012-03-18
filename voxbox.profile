@@ -26,9 +26,10 @@ function voxbox_profile_modules() {
     /* other contrib */
     'install_profile_api', 'autoload',
     'content', 'number', 'filefield', 'optionwidgets', 'text', 'fieldgroup', 'audiofield',
-    'views', 'views_ui', 'draggableviews', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 'auto_nodetitle', 
+    'views', 'views_ui', 'draggableviews', 'og', 'og_views', 'ctools', 'strongarm', 'features', 'token', 'transliteration', 'auto_nodetitle',
     'admin_menu', 'wysiwyg', 'better_formats', 'vertical_tabs',
     'voip', 'voipnode', 'voipextension', 'voipcall', 'voiptropo', 'voiptwilio', 'voipviews', 'voipscriptstore', 'voicemail', 'voicemail_node', 'voipusernumber', 'voipnumber',
+    'messaging', 'messaging_simple', 'messaging_voip', 'notifications_content', 'notifications', 'notifications_autosubscribe', 'notifications_lite', 'notifications_ui', 'notifications_views',
   );
 }
 
@@ -92,7 +93,14 @@ function voxbox_profile_install_voxbox($url) {
 
   // call rebuild - this makes the cck fields 'associate' to their node types properly
   features_rebuild();
-  
+ 
+  // switch off og views that are overriden.
+  $status = variable_get('views_defaults', array());
+  $status['og'] = TRUE;
+  $status['og_unread'] = TRUE;
+  $status['og_my'] = TRUE;
+  variable_set('views_defaults', $status);
+
   // needed to make autoload reindex
   module_invoke('autoload', 'flush_caches');
 }

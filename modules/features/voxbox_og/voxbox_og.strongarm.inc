@@ -24,7 +24,7 @@ function voxbox_og_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'audiofield_players_dir';
-  $strongarm->value = 'sites/all/libraries/player';
+  $strongarm->value = 'profiles/voxbox/libraries/audio-players';
   $export['audiofield_players_dir'] = $strongarm;
 
   $strongarm = new stdClass;
