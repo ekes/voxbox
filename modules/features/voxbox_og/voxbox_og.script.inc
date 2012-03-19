@@ -12,13 +12,11 @@
  */
 function _voxbox_og_node_script($node) {
   $script = new VoipScript('voxbox_og');
-  $script->addLabel('begin');
-$script->addLog('begin');
   $script->addSet('voxbox_og_gid', $node->nid);
 
+  $script->addLabel('begin');
   // if (member of group:
   $script->addSet('voxbox_og_member', '^og_is_group_member(%voxbox_og_gid, FALSE, %user_uid)');
-$script->addLog('checked it\'s %voxbox_og_member');
   $script->addGotoIf('not_member', '^%voxbox_og_member == 0');
   // )
   // {
@@ -209,7 +207,7 @@ function _voxbox_og_notifications_unsubscribe($gid) {
   $script = new VoipScript('voxbox_og_notifications_unsubscribe');
 
   og_notifications_user_unsubscribe($user, $gid);
-  $script->addSay('Your have been unsubscribed.');
+  $script->addSay('You have been unsubscribed.');
   return $script;
 }
 
@@ -223,8 +221,8 @@ function _voxbox_og_subscribe_user($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_subscribe_user');
   $result = og_subscribe_user($gid, $user);
-  // Need to reload the current user to reflect change.
-  $user = user_load(array('uid' => $user->uid));
+  // Force reload of group memberships.
+  $user->og_groups = og_get_subscriptions($user->uid, 1, TRUE);
   $script->addSay(strip_tags($result['message']));
   return $script;
 }
@@ -239,8 +237,8 @@ function _voxbox_og_delete_subscription($gid) {
   global $user;
   $script = new VoipScript('voxbox_og_delete_subscription');
   og_delete_subscription($gid, $user->uid);
-  // Need to reload the current user to reflect change.
-  $user = user_load(array('uid' => $user->uid));
+  // Force reload of group memberships.
+  $user->og_groups = og_get_subscriptions($user->uid, 1, TRUE);
   $script->addSay('You are no longer following this Vox Box');
   return $script;
 }
@@ -267,7 +265,6 @@ function _voxbox_og_record_sms_announcement_script() {
  * Helper to parse _voxbox_og_record_sms_announcement_script().
  */
 function _voxbox_og_record_sms_announcement($text) {
-watchdog('DEBUG', $text);
   global $user;
 
   // The user should have been logged in by number.
