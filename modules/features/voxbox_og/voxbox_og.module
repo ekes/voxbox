@@ -3,6 +3,13 @@
 include_once('voxbox_og.features.inc');
 
 /**
+ * Implenetation of hook_menu_alter().
+ */
+function voxbox_og_menu_alter(&$items) {
+   $items['node/%node/broadcast']['access callback'] = FALSE;
+}
+
+/**
  * Implementation of hook_voipscript_load_script().
  */
 function voxbox_og_voipscript_load_script($script_name, $params = NULL) {
