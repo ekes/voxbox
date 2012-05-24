@@ -14,7 +14,7 @@ Create a file make file `voxbox.make` containing:-
     projects[] = drupal
     projects[voxbox][type] = "profile"
     projects[voxbox][download][type] = "git"
-    projects[voxbox][download][url] = "git://git.iskra.net/drupal/project/voxbox.git/"
+    projects[voxbox][download][url] = "git://github.com/ekes/voxbox.git"
 
 Then run it: `drush make voxbox.make docroot` Where docroot is the path/to/the/directory where you want the public document root of the website.
 
