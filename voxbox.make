@@ -151,7 +151,7 @@ projects[notifications][version] = 2.3
 ; temporarily using git dev version of messaging_voip
 projects[messaging_voip][type] = "module"
 projects[messaging_voip][download][type] = "git"
-projects[messaging_voip][download][url] = "git://git.iskra.net/drupal/contrib/messaging_voip"
+projects[messaging_voip][download][url] = "git://git.iskra.net/drupal/contrib/messaging_voip.git"
 projects[messaging_voip][download][branch] = "6.x-1.x-sms_and_pull"
 projects[messaging_voip][subdir] = "contrib"
 ; presently a dependency for messaging_voip
