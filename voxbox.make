@@ -145,7 +145,7 @@ projects[messaging][subdir] = "contrib"
 projects[messaging][download][type] = "git"
 projects[messaging][download][url] = "git://git.drupal.org/project/messaging"
 projects[messaging][download][branch] = "6.x-2.x"
-projects[messaging][patch][] = "http://void.media.mit.edu/redmine/attachments/download/3/58-1-messaging-clear_tokens.patch"
+projects[messaging][patch][] = "http://iskra.net/patches/58-1-messaging-clear_tokens.patch"
 projects[notifications][subdir] = "contrib"
 projects[notifications][version] = 2.3
 ; temporarily using git dev version of messaging_voip
